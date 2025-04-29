@@ -70,7 +70,13 @@ typedef struct s_png
 	t_png_color_type	color_type;
 	bool				interlace;
 	//
-	u
+	union
+	{
+		uint8_t		*pixels_8bit;
+		uint16_t	*pixels_16bit;
+	};
+	uint32_t	*palette;
+	uint32_t	palette_size;
 }	t_png;
 
 uint32_t	swap_endian(uint32_t value);
