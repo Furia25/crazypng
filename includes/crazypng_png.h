@@ -20,19 +20,23 @@
 # include <unistd.h>
 # include "crazypng_utils.h"
 
-# define CP_BUFFER_SIZE	4096
+# define PNG_SIGNATURE	"\211PNG\r\n\032\n"
+# define PNG_ERROR		"png"
 
 # define PNG_CHUNK_TYPE_CHAR_IHDR "IHDR"
 # define PNG_CHUNK_TYPE_CHAR_IDAT "IDAT"
 # define PNG_CHUNK_TYPE_CHAR_IEND "IEND"
 # define PNG_CHUNK_TYPE_CHAR_PLTE "PLTE"
+# define PNG_CHUNK_TYPE_CHAR_GAMA "gAMA"
 
 typedef enum e_png_chunk_type
 {
-	PNG_CHUNK_IHDR,
+	PNG_CHUNK_IHDR = 0,
 	PNG_CHUNK_IDAT,
 	PNG_CHUNK_IEND,
-	PNG_CHUNK_PLTE
+	PNG_CHUNK_PLTE,
+	PNG_CHUNK_GAMA,
+	PNG_CHUNK_UNKNOWN
 }	t_png_chunk_type;
 
 typedef enum e_png_color_type
@@ -57,8 +61,14 @@ typedef struct s_png_chunk_data_IHDR
 
 typedef struct s_png_chunk_header
 {
-	uint32_t			length;
-	t_png_chunk_type	type;
+	uint32_t				length;
+	t_png_chunk_type		type_enum;
+	union
+	{
+		uint32_t			type_code;
+		char				type_str[4];
+	};
+	
 }	t_png_chunk_header;
 
 typedef struct s_png_chunk
@@ -68,15 +78,19 @@ typedef struct s_png_chunk
 	uint32_t			checksum;
 }	t_png_chunk;
 
-typedef struct s_png
+typedef struct s_png_header
 {
-	//	image_header
 	uint32_t			width;
 	uint32_t			height;
 	uint8_t				bit_depth;
 	t_png_color_type	color_type;
 	bool				interlace;
-	//
+}	t_png_header;
+
+typedef struct s_png
+{
+	t_cp_file		*file;
+	t_png_header	data;
 	union
 	{
 		uint8_t		*pixels_8bit;
@@ -84,8 +98,12 @@ typedef struct s_png
 	};
 	uint32_t			*palette;
 	uint32_t			palette_size;
+	bool				convert_endian;
 }	t_png;
 
-uint32_t	swap_endian(uint32_t value);
+bool	png_chunk_read(t_png *png, t_png_chunk *chunk);
+t_png	*png_open(char *file_name);
+void	png_close(t_png *png);
+bool	png_parse(t_png *png);
 
 #endif

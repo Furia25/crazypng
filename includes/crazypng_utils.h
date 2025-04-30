@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   crazypng_utils.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: vdurand <vdurand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 00:22:01 by val               #+#    #+#             */
-/*   Updated: 2025/04/30 01:47:30 by val              ###   ########.fr       */
+/*   Updated: 2025/04/30 12:37:57 by vdurand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 # include <unistd.h>
 # include "libft.h"
 
+# define CP_BUFFER_SIZE	4096
+
 typedef struct s_cp_file
 {
 	int		fd;
@@ -27,4 +29,9 @@ typedef struct s_cp_file
 	ssize_t	valid_bytes;
 	size_t	pos;
 }	t_cp_file;
+
+t_cp_file	*cp_open(char *name, int flags);
+void		cp_close(t_cp_file *file);
+size_t		cp_fread(void *ptr, size_t size, size_t nmemb, t_cp_file *file);
+uint32_t	swap_endian32(uint32_t value);
 #endif

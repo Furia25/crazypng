@@ -3,23 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: vdurand <vdurand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 23:55:54 by val               #+#    #+#             */
-/*   Updated: 2025/04/30 02:05:56 by val              ###   ########.fr       */
+/*   Updated: 2025/04/30 12:54:54 by vdurand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "crazypng_png.h"
 
-t_cp_file	*cp_open(char *name)
+t_cp_file	*cp_open(char *name, int flags)
 {
 	t_cp_file	*file;
 
 	file = malloc(sizeof(t_cp_file));
 	if (!file)
 		return (NULL);
-	file->fd = open(name, O_RDONLY);
+	file->fd = open(name, flags);
 	if (file->fd == -1)
 	{
 		free(file);
@@ -68,25 +68,8 @@ size_t	cp_fread(void *ptr, size_t size, size_t nmemb, t_cp_file *file)
 	return (nmemb);
 }
 
-uint32_t	swap_endian(uint32_t value)
+uint32_t	swap_endian32(uint32_t value)
 {
 	return (((value >> 24) & 0xFF) | ((value >> 8) & 0xFF00) | \
 		((value << 8) & 0xFF0000) | ((value << 24) & 0xFF000000));
-}
-
-int	main(void)
-{
-	t_cp_file	*file;
-
-	file = cp_open("test.bin");
-	if (!file)
-	{
-		perror("Failed to open file");
-		return (1);
-	}
-	int value;
-	value = 0;
-	size_t read = cp_fread(&value, sizeof(uint32_t), 1, file);
-	ft_putnbr_base_fd(value, "01", 1);
-	cp_close(file);
 }
