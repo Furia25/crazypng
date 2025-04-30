@@ -68,12 +68,14 @@ typedef struct s_png_chunk_header
 		uint32_t			type_code;
 		char				type_str[4];
 	};
-	
 }	t_png_chunk_header;
 
 typedef struct s_png_chunk
 {
 	t_png_chunk_header	header;
+	bool				ancillary;
+	bool				private;
+
 	uint8_t				*data;
 	uint32_t			checksum;
 }	t_png_chunk;
@@ -89,8 +91,8 @@ typedef struct s_png_header
 
 typedef struct s_png
 {
-	t_cp_file		*file;
-	t_png_header	data;
+	t_cp_file			*file;
+	t_png_header		data;
 	union
 	{
 		uint8_t		*pixels_8bit;
@@ -101,9 +103,11 @@ typedef struct s_png
 	bool				convert_endian;
 }	t_png;
 
-bool	png_chunk_read(t_png *png, t_png_chunk *chunk);
-t_png	*png_open(char *file_name);
-void	png_close(t_png *png);
-bool	png_parse(t_png *png);
+bool				png_ischunk_critical(t_png_chunk_type type);
+t_png_chunk_type	png_chunk_get_type(t_png_chunk *chunk);
+bool				png_chunk_read(t_png *png, t_png_chunk *chunk);
+t_png				*png_open(char *file_name);
+void				png_close(t_png *png);
+bool				png_parse(t_png *png);
 
 #endif

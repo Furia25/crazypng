@@ -6,7 +6,7 @@
 #    By: vdurand <vdurand@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/13 23:20:17 by val               #+#    #+#              #
-#    Updated: 2025/04/30 13:24:28 by vdurand          ###   ########.fr        #
+#    Updated: 2025/04/30 15:34:35 by vdurand          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,7 +70,9 @@ SRC_FILES = \
 	utils.c \
 	test_main.c \
 	png_managing.c \
-	png_parsing_chunk.c
+	png_parsing.c \
+	png_parsing_chunk.c \
+	png_chunk_utils.c
 
 SRC = $(patsubst %.c, $(SRC_DIR)/%.c, $(SRC_FILES))
 OBJ = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))
