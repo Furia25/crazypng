@@ -1,19 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   crazypng.h                                         :+:      :+:    :+:   */
+/*   crazypng_png.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vdurand <vdurand@student.42.fr>            +#+  +:+       +#+        */
+/*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/28 20:13:16 by vdurand           #+#    #+#             */
-/*   Updated: 2025/04/28 20:13:17 by vdurand          ###   ########.fr       */
+/*   Created: 2025/04/30 00:42:30 by val               #+#    #+#             */
+/*   Updated: 2025/04/30 00:42:30 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CRAZYPNG_H
-# define CRAZYPNG_H
+#ifndef CRAZYPNG_PNG_H
+# define CRAZYPNG_PNG_H
 # include <stdint.h>
 # include <stdbool.h>
+# include <stdio.h>
+# include <fcntl.h>
+# include <stdlib.h>
+# include <unistd.h>
+# include "crazypng_utils.h"
+
+# define CP_BUFFER_SIZE	4096
 
 # define PNG_CHUNK_TYPE_CHAR_IHDR "IHDR"
 # define PNG_CHUNK_TYPE_CHAR_IDAT "IDAT"
@@ -75,8 +82,8 @@ typedef struct s_png
 		uint8_t		*pixels_8bit;
 		uint16_t	*pixels_16bit;
 	};
-	uint32_t	*palette;
-	uint32_t	palette_size;
+	uint32_t			*palette;
+	uint32_t			palette_size;
 }	t_png;
 
 uint32_t	swap_endian(uint32_t value);

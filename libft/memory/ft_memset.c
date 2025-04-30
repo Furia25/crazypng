@@ -3,28 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vdurand <vdurand@student.42.fr>            +#+  +:+       +#+        */
+/*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 10:52:43 by vdurand           #+#    #+#             */
-/*   Updated: 2025/04/02 18:10:43 by vdurand          ###   ########.fr       */
+/*   Updated: 2025/04/30 01:01:25 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdint.h>
 
-void	*ft_memset(void *pointer, int value, size_t count)
+void	*ft_memset(void *ptr, int value, size_t num)
 {
-	unsigned char	*c_pointer;
-	size_t			index;
+	unsigned char	*p;
+	unsigned char	val;
+	uint64_t		block;
+	size_t			chunks;
 
-	c_pointer = (unsigned char *) pointer;
-	index = 0;
-	while (index < count)
+	p = (unsigned char *)ptr;
+	val = (unsigned char)value;
+	while (((uintptr_t)p & 0x7) && num--)
+		*p++ = val;
+	block = val * 0x0101010101010101ULL;
+	chunks = num / 8;
+	while (chunks--)
 	{
-		c_pointer[index] = (unsigned char) value;
-		index++;
+		*(uint64_t *)p = block;
+		p += 8;
 	}
-	return (pointer);
+	num %= 8;
+	while (num--)
+		*p++ = val;
+	return (ptr);
 }
 
 /* int main () 

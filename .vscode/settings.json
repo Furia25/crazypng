@@ -1,3 +1,16 @@
 {
-	"markdown.validate.enabled": true
+	"markdown.validate.enabled": true,
+	"files.associations": {
+		"stdint.h": "c",
+		"stdio.h": "c",
+		"unistd.h": "c",
+		"compare": "c",
+		"cstdint": "c"
+	},
+	"github.copilot.enable": {
+		"*": false,
+		"plaintext": false,
+		"markdown": false,
+		"scminput": false
+	}
 }

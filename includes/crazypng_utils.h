@@ -1,19 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   crazypng_utils.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/28 23:55:54 by val               #+#    #+#             */
-/*   Updated: 2025/04/28 23:56:16 by val              ###   ########.fr       */
+/*   Created: 2025/04/30 00:22:01 by val               #+#    #+#             */
+/*   Updated: 2025/04/30 01:47:30 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "crazypng.h"
+#ifndef CRAZYPNG_UTILS_H
+# define CRAZYPNG_UTILS_H
+# include <stdint.h>
+# include <stdbool.h>
+# include <stdio.h>
+# include <fcntl.h>
+# include <stdlib.h>
+# include <unistd.h>
+# include "libft.h"
 
-uint32_t	swap_endian(uint32_t value)
+typedef struct s_cp_file
 {
-	return (((value >> 24) & 0xFF) | ((value >> 8) & 0xFF00) | \
-		((value << 8) & 0xFF0000) | ((value << 24) & 0xFF000000));
-}
+	int		fd;
+	char	buffer[4096];
+	ssize_t	valid_bytes;
+	size_t	pos;
+}	t_cp_file;
+#endif
