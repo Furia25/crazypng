@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vdurand <vdurand@student.42.fr>            +#+  +:+       +#+         #
+#    By: val <val@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/13 23:20:17 by val               #+#    #+#              #
-#    Updated: 2025/04/30 15:34:35 by vdurand          ###   ########.fr        #
+#    Updated: 2025/05/01 02:05:58 by val              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -72,7 +72,8 @@ SRC_FILES = \
 	png_managing.c \
 	png_parsing.c \
 	png_parsing_chunk.c \
-	png_chunk_utils.c
+	png_chunk_utils.c \
+	png_chunk_IHDR.c
 
 SRC = $(patsubst %.c, $(SRC_DIR)/%.c, $(SRC_FILES))
 OBJ = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))

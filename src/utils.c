@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vdurand <vdurand@student.42.fr>            +#+  +:+       +#+        */
+/*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 23:55:54 by val               #+#    #+#             */
-/*   Updated: 2025/04/30 12:54:54 by vdurand          ###   ########.fr       */
+/*   Updated: 2025/05/01 02:13:10 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ void	cp_close(t_cp_file *file)
 {
 	if (file)
 	{
-		close(file->fd);
+		if (file->fd != -1)
+			close(file->fd);
 		free(file);
 	}
 }

@@ -21,7 +21,12 @@
 # include "crazypng_utils.h"
 
 # define PNG_SIGNATURE	"\211PNG\r\n\032\n"
-# define PNG_ERROR		"png"
+
+# define PNG_ERROR_SIGNATURE	"PNG Error: Wrong signature\n"
+# define PNG_ERROR_BITDEPTH		"PNG Error: Invalid bit depth, color pair\n"
+# define PNG_ERROR_IHDR_SIZE	"PNG Error: Invalid IHDR size\n"
+
+# define PNG_CHUNK_SIZE_IHDR	13
 
 # define PNG_CHUNK_TYPE_CHAR_IHDR "IHDR"
 # define PNG_CHUNK_TYPE_CHAR_IDAT "IDAT"
@@ -80,30 +85,22 @@ typedef struct s_png_chunk
 	uint32_t			checksum;
 }	t_png_chunk;
 
-typedef struct s_png_header
-{
-	uint32_t			width;
-	uint32_t			height;
-	uint8_t				bit_depth;
-	t_png_color_type	color_type;
-	bool				interlace;
-}	t_png_header;
-
 typedef struct s_png
 {
-	t_cp_file			*file;
-	t_png_header		data;
+	t_cp_file				*file;
+	t_png_chunk_data_IHDR	data;
 	union
 	{
 		uint8_t		*pixels_8bit;
 		uint16_t	*pixels_16bit;
 	};
-	uint32_t			*palette;
-	uint32_t			palette_size;
-	bool				convert_endian;
+	uint32_t				*palette;
+	uint32_t				palette_size;
+	bool					convert_endian;
 }	t_png;
 
 bool				png_ischunk_critical(t_png_chunk_type type);
+bool				chunk_parse_ihdr(t_png *png, t_png_chunk *chunk);
 t_png_chunk_type	png_chunk_get_type(t_png_chunk *chunk);
 bool				png_chunk_read(t_png *png, t_png_chunk *chunk);
 t_png				*png_open(char *file_name);
