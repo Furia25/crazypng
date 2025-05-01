@@ -6,7 +6,8 @@
 		"unistd.h": "c",
 		"compare": "c",
 		"cstdint": "c",
-		"crazypng_png.h": "c"
+		"crazypng_png.h": "c",
+		"zlib.h": "c"
 	},
 	"github.copilot.enable": {
 		"*": false,

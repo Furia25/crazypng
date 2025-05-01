@@ -6,7 +6,7 @@
 /*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 23:55:54 by val               #+#    #+#             */
-/*   Updated: 2025/05/01 02:13:10 by val              ###   ########.fr       */
+/*   Updated: 2025/05/01 17:01:29 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,12 @@ size_t	cp_fread(void *ptr, size_t size, size_t nmemb, t_cp_file *file)
 	copied = 0;
 	while (copied < total_bytes)
 	{
-		if (file->pos >= file->valid_bytes)
+		if (file->pos >= (size_t) file->valid_bytes)
 		{
 			file->valid_bytes = read(file->fd, file->buffer, CP_BUFFER_SIZE);
 			if (file->valid_bytes == 0)
 				return (copied / size);
-			if (file->valid_bytes == (size_t) - 1)
+			if (file->valid_bytes == -1)
 				return (0);
 			file->pos = 0;
 		}

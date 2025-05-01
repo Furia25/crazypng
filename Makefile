@@ -6,7 +6,7 @@
 #    By: val <val@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/13 23:20:17 by val               #+#    #+#              #
-#    Updated: 2025/05/01 02:05:58 by val              ###   ########.fr        #
+#    Updated: 2025/05/01 17:17:58 by val              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -71,26 +71,36 @@ SRC_FILES = \
 	test_main.c \
 	png_managing.c \
 	png_parsing.c \
-	png_parsing_chunk.c \
+	png_chunk_parsing.c \
 	png_chunk_utils.c \
-	png_chunk_IHDR.c
+	png_chunk_IHDR.c \
+	png_chunk_IDAT.c
 
 SRC = $(patsubst %.c, $(SRC_DIR)/%.c, $(SRC_FILES))
 OBJ = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))
 DEP = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.d, $(SRC))
 
+LIBFT_DIR = libft
+MLX_DIR = minilibx
+
 CC = cc -g3
-CFLAGS =
-READLINE_INC = -I/usr/local/include
-INCLUDES = -I$(INC_DIR) -I$(LIBFT_DIR) $(READLINE_INC)
-LDFLAGS = -L$(LIBFT_DIR) -lft -L/usr/local/lib -lreadline
-FLAGS = $(CFLAGS) -MMD -MP
+OPTIFLAGS = 
+CFLAGS = $(OPTIFLAGS) -Werror -Wextra -Wall
+MLXFLAGS = -L$(MLX_DIR) -lmlx
+FTFLAGS = -L$(LIBFT_DIR) -lft
+LDFLAGS = -lXext -lm -lX11 $(MLXFLAGS) $(FTFLAGS)
+INCLUDES = -I$(MLX_DIR) -I$(INC_DIR) -I$(LIBFT_DIR)
 
-all: makelibft $(NAME)
+all: makelibft makeminilibx $(NAME)
 
-$(NAME): $(OBJ)
-	$(SILENT)$(CC) $(FLAGS) $(OBJ) $(LDFLAGS) -o $@
+$(NAME): $(OBJ) $(LIBFT_DIR)/libft.a $(MLX_DIR)/libmlx.a
+	$(SILENT)$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 	@echo "$(BG_GREEN)>>> Program $(NAME) compiled!$(RESET)"
+
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c Makefile $(INC_DIR)/*.h | $(OBJ_DIR)
+	$(SILENT) mkdir -p $(dir $@)
+	@echo "$(BLUE)>>> Compiling $<...$(RESET)"
+	$(SILENT)$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 makelibft:
 	@echo "$(BLUE)>>> Compiling Libft...$(RESET)"
@@ -98,10 +108,10 @@ makelibft:
 	$(SILENT)$(MAKE) bonus -C $(LIBFT_DIR) $(DUMP_OUT)
 	@echo "$(GREEN)>>> Compilation achieved!$(RESET)"
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c Makefile $(INC_DIR)/*.h $(LIBFT_DIR)/libft.a | $(OBJ_DIR)
-	$(SILENT) mkdir -p $(dir $@)
-	@echo "$(BLUE)>>> Compiling $<...$(RESET)"
-	$(SILENT)$(CC) $(FLAGS) $(INCLUDES) -c $< -o $@
+makeminilibx:
+	@echo "$(BLUE)>>> Configuration of MiniLibX...$(RESET)"
+	@cd $(MLX_DIR) && bash configure > /dev/null 2>&1
+	@echo "$(GREEN)>>> Configuration achieved!$(RESET)"
 
 $(OBJ_DIR):
 	@echo "$(YELLOW)>>> Directory '$(OBJ_DIR)' created!$(RESET)"
@@ -109,7 +119,8 @@ $(OBJ_DIR):
 
 cleanlibs:
 	@echo "$(YELLOW)>>> Cleaning libs...$(RESET)"
-	$(SILENT)$(MAKE) fclean -C $(LIBFT_DIR) $(DUMP_OUT)
+	@cd $(MLX_DIR)  && bash configure clean > /dev/null 2>&1
+	@$(MAKE) fclean -C $(LIBFT_DIR) > /dev/null 2>&1
 
 clean:
 	@echo "$(YELLOW)>>> Cleaning objects$(RESET)"
@@ -132,4 +143,4 @@ debug_trueclean: all
 
 -include $(DEP)
 
-.PHONY: all cleanlibs clean fclean re makelibft debug debug_env debug_trueclean
+.PHONY: all cleanlibs clean fclean re makelibft makeminilibx debug debug_env debug_trueclean

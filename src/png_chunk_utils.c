@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   png_chunk_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vdurand <vdurand@student.42.fr>            +#+  +:+       +#+        */
+/*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 15:26:37 by vdurand           #+#    #+#             */
-/*   Updated: 2025/04/30 15:38:26 by vdurand          ###   ########.fr       */
+/*   Updated: 2025/05/01 16:39:21 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,19 @@ t_png_chunk_type	png_chunk_get_type(t_png_chunk *chunk)
 	return (PNG_CHUNK_UNKNOWN);
 }
 
-bool	png_ischunk_critical(t_png_chunk_type type)
+bool	chunk_is_critical(t_png_chunk_type type)
 {
 	return (type == PNG_CHUNK_IHDR || type == PNG_CHUNK_PLTE || \
 			type == PNG_CHUNK_IDAT || type == PNG_CHUNK_IEND);
+}
+
+bool	chunk_precede_plte(t_png_chunk_type type)
+{
+	return (type == PNG_CHUNK_GAMA);
+}
+
+bool	chunk_precede_idat(t_png_chunk_type type)
+{
+	return (type == PNG_CHUNK_IHDR || type == PNG_CHUNK_PLTE || \
+			type == PNG_CHUNK_GAMA);
 }

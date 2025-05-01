@@ -6,7 +6,7 @@
 /*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 01:16:56 by val               #+#    #+#             */
-/*   Updated: 2025/05/01 02:30:08 by val              ###   ########.fr       */
+/*   Updated: 2025/05/01 15:01:24 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ bool	chunk_parse_ihdr(t_png *png, t_png_chunk *chunk)
 		ft_putstr_fd(PNG_ERROR_BITDEPTH, 2);
 		return (false);
 	}
-	if (dpeth)
 	if (png->convert_endian)
 	{
 		png->data.width = swap_endian32(png->data.width);

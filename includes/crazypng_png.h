@@ -64,6 +64,13 @@ typedef struct s_png_chunk_data_IHDR
 	uint8_t		interlace;
 }	t_png_chunk_data_IHDR;
 
+typedef struct s_png_deflate_data
+{
+	uint8_t	*data;
+	size_t	size;
+	size_t	capacity;
+}	t_png_deflate_data;
+
 typedef struct s_png_chunk_header
 {
 	uint32_t				length;
@@ -89,6 +96,7 @@ typedef struct s_png
 {
 	t_cp_file				*file;
 	t_png_chunk_data_IHDR	data;
+	t_png_deflate_data		uncompressed_data;
 	union
 	{
 		uint8_t		*pixels_8bit;
@@ -99,8 +107,14 @@ typedef struct s_png
 	bool					convert_endian;
 }	t_png;
 
-bool				png_ischunk_critical(t_png_chunk_type type);
+bool				chunk_idat_add(t_png_deflate_data *data, t_png_chunk *chnk);
+
+bool				chunk_is_critical(t_png_chunk_type type);
+bool				chunk_precede_idat(t_png_chunk_type type);
+bool				chunk_precede_plte(t_png_chunk_type type);
+
 bool				chunk_parse_ihdr(t_png *png, t_png_chunk *chunk);
+
 t_png_chunk_type	png_chunk_get_type(t_png_chunk *chunk);
 bool				png_chunk_read(t_png *png, t_png_chunk *chunk);
 t_png				*png_open(char *file_name);
