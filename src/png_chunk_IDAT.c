@@ -6,13 +6,13 @@
 /*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 15:59:48 by val               #+#    #+#             */
-/*   Updated: 2025/05/01 16:33:56 by val              ###   ########.fr       */
+/*   Updated: 2025/05/01 22:59:49 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "crazypng_png.h"
 
-bool	chunk_idat_add(t_png_deflate_data *buf, t_png_chunk *chunk)
+bool	chunk_idat_add(t_png_deflate_buffer *buf, t_png_chunk *chunk)
 {
 	size_t	new_capacity;
 	uint8_t	*new_data;

@@ -6,21 +6,24 @@
 /*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 15:15:41 by vdurand           #+#    #+#             */
-/*   Updated: 2025/05/01 16:34:30 by val              ###   ########.fr       */
+/*   Updated: 2025/05/01 23:07:44 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "crazypng_png.h"
 
+static bool	png_chunk_end(t_png *png, t_png_chunk *chunk, bool idat, int plte);
 static bool	png_parse_first(t_png *png, t_png_chunk *chunk);
 static int	chunk_return(t_png_chunk *chunk, int return_code);
 
 bool	png_parse(t_png *png)
 {
+	int				plte_number;
 	bool			idat_encountered;
 	t_png_chunk		chunk;
 
 	idat_encountered = false;
+	plte_number = 0;
 	if (!png_parse_first(png, &chunk))
 		return (chunk_return(&chunk, false));
 	while (png_chunk_read(png, &chunk))
@@ -28,16 +31,35 @@ bool	png_parse(t_png *png)
 		if (chunk_precede_idat(chunk.header.type_enum) && idat_encountered)
 			return (chunk_return(&chunk, false));
 		if (chunk.header.type_enum == PNG_CHUNK_IEND)
-			return (chunk_return(&chunk, idat_encountered));
+			return (png_chunk_end(png, &chunk, idat_encountered, plte_number));
 		if (chunk.header.type_enum == PNG_CHUNK_IDAT)
 		{
 			if (!chunk_idat_add(&png->uncompressed_data, &chunk))
 				return (chunk_return(&chunk, false));
-			idat_encountered = true;
+		idat_encountered = true;
 		}
 		free(chunk.data);
 	}
 	return (chunk_return(&chunk, false));
+}
+
+static bool	png_chunk_end(t_png *png, t_png_chunk *chunk, bool idat, int plte)
+{
+	if (!idat)
+		return (chunk_return(chunk, false));
+	if (plte == 1)
+	{
+		if (png->header.color_type != PNG_COLOR_PALETTE || \
+			png->header.color_type != PNG_COLOR_RGB || \
+			png->header.color_type != PNG_COLOR_RGBA)
+			return (chunk_return(chunk, false));
+	}
+	else if (plte == 0 && png->header.color_type == PNG_COLOR_PALETTE)
+		return (chunk_return(chunk, false));
+	else if (plte > 1)
+		return (chunk_return(chunk, false));
+	
+	return (chunk_return(chunk, true));
 }
 
 static bool	png_parse_first(t_png *png, t_png_chunk *chunk)

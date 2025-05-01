@@ -6,7 +6,7 @@
 /*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 01:16:56 by val               #+#    #+#             */
-/*   Updated: 2025/05/01 15:01:24 by val              ###   ########.fr       */
+/*   Updated: 2025/05/01 23:04:17 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,16 @@ bool	chunk_parse_ihdr(t_png *png, t_png_chunk *chunk)
 		ft_putstr_fd(PNG_ERROR_IHDR_SIZE, 2);
 		return (false);
 	}
-	ft_memcpy(&(png->data), chunk->data, PNG_CHUNK_SIZE_IHDR);
-	if (!is_valid_depthcolor_pair(png->data.bit_depth, png->data.color_type))
+	ft_memcpy(&(png->header), chunk->data, PNG_CHUNK_SIZE_IHDR);
+	if (!is_valid_depthcolor_pair(png->header.bit_depth, png->header.color_type))
 	{
 		ft_putstr_fd(PNG_ERROR_BITDEPTH, 2);
 		return (false);
 	}
 	if (png->convert_endian)
 	{
-		png->data.width = swap_endian32(png->data.width);
-		png->data.height = swap_endian32(png->data.height);
+		png->header.width = swap_endian32(png->header.width);
+		png->header.height = swap_endian32(png->header.height);
 	}
 	return (true);
 }
