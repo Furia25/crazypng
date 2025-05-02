@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bitstream_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vdurand <vdurand@student.42.fr>            +#+  +:+       +#+        */
+/*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 15:55:01 by vdurand           #+#    #+#             */
-/*   Updated: 2025/05/02 17:42:47 by vdurand          ###   ########.fr       */
+/*   Updated: 2025/05/02 19:19:51 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 /*LSB FIRST bitstream*/
 
-uint32_t	read_bits(t_bitstream *bs, int count)
+uint64_t	bs_read_bits(t_bitstream *bs, int count)
 {
-	uint32_t	result;
+	uint64_t	result;
 	int			i;
 
-	if (count <= 0 || count > 32)
+	if (count <= 0 || count > 64)
 		return (0);
 	result = 0;
 	i = 0;
@@ -40,4 +40,34 @@ uint32_t	read_bits(t_bitstream *bs, int count)
 		i++;
 	}
 	return (result);
+}
+
+bool	bs_sread_64bits(t_bitstream *bs, int count, uint64_t *value)
+{
+	*value = (uint32_t) bs_read_bits(bs, count);
+	return (!bs->overflowed);
+}
+
+bool	bs_sread_32bits(t_bitstream *bs, int count, uint32_t *value)
+{
+	if (count > 32)
+		return (false);
+	*value = (uint32_t) bs_read_bits(bs, count);
+	return (!bs->overflowed);
+}
+
+bool	bs_sread_16bits(t_bitstream *bs, int count, uint16_t *value)
+{
+	if (count > 16)
+		return (false);
+	*value = (uint16_t) bs_read_bits(bs, count);
+	return (!bs->overflowed);
+}
+
+bool	bs_sread_8bits(t_bitstream *bs, int count, uint8_t *value)
+{
+	if (count > 8)
+		return (false);
+	*value = (uint8_t) bs_read_bits(bs, count);
+	return (!bs->overflowed);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   crazypng_deflate.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vdurand <vdurand@student.42.fr>            +#+  +:+       +#+        */
+/*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 14:45:54 by vdurand           #+#    #+#             */
-/*   Updated: 2025/05/02 17:30:48 by vdurand          ###   ########.fr       */
+/*   Updated: 2025/05/02 19:18:27 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,13 @@ typedef struct s_inflate_context
 	size_t			output_pos;
 }	t_inflate_context;
 
-uint32_t	read_bits(t_bitstream *bs, int count);
+uint64_t	bs_read_bits(t_bitstream *bs, int count);
+
+bool	bs_sread_8bits(t_bitstream *bs, int count, uint8_t *value);
+bool	bs_sread_16bits(t_bitstream *bs, int count, uint16_t *value);
+bool	bs_sread_32bits(t_bitstream *bs, int count, uint32_t *value);
+bool	bs_sread_64bits(t_bitstream *bs, int count, uint64_t *value);
+
 bool		cp_inflate(t_cp_buffer *output, uint8_t *input, size_t input_size);
 
 #endif
