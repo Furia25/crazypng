@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   png_parsing.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: vdurand <vdurand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 15:15:41 by vdurand           #+#    #+#             */
-/*   Updated: 2025/05/01 23:07:44 by val              ###   ########.fr       */
+/*   Updated: 2025/05/02 16:35:25 by vdurand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "crazypng_png.h"
 
+static bool	chunk_parse_idat(t_png *png, t_png_chunk *chunk, bool *encountered);
 static bool	png_chunk_end(t_png *png, t_png_chunk *chunk, bool idat, int plte);
 static bool	png_parse_first(t_png *png, t_png_chunk *chunk);
 static int	chunk_return(t_png_chunk *chunk, int return_code);
@@ -34,32 +35,43 @@ bool	png_parse(t_png *png)
 			return (png_chunk_end(png, &chunk, idat_encountered, plte_number));
 		if (chunk.header.type_enum == PNG_CHUNK_IDAT)
 		{
-			if (!chunk_idat_add(&png->uncompressed_data, &chunk))
+			if (!chunk_parse_idat(png, &chunk, &idat_encountered))
 				return (chunk_return(&chunk, false));
-		idat_encountered = true;
 		}
 		free(chunk.data);
 	}
 	return (chunk_return(&chunk, false));
 }
 
+static bool	chunk_parse_idat(t_png *png, t_png_chunk *chunk, bool *encountered)
+{
+	if (!cp_buffer_add(&png->uncompressed_data, chunk->data, \
+		chunk->header.length))
+		return (false);
+	*encountered = true;
+	return (true);
+}
+
 static bool	png_chunk_end(t_png *png, t_png_chunk *chunk, bool idat, int plte)
 {
+	if (chunk->data)
+		free(chunk->data);
 	if (!idat)
-		return (chunk_return(chunk, false));
+		return (false);
 	if (plte == 1)
 	{
-		if (png->header.color_type != PNG_COLOR_PALETTE || \
-			png->header.color_type != PNG_COLOR_RGB || \
-			png->header.color_type != PNG_COLOR_RGBA)
-			return (chunk_return(chunk, false));
+		if (!(png->header.color_type == PNG_COLOR_PALETTE || \
+			png->header.color_type == PNG_COLOR_RGB || \
+			png->header.color_type == PNG_COLOR_RGBA))
+			return (false);
 	}
 	else if (plte == 0 && png->header.color_type == PNG_COLOR_PALETTE)
-		return (chunk_return(chunk, false));
+		return (false);
 	else if (plte > 1)
-		return (chunk_return(chunk, false));
-	
-	return (chunk_return(chunk, true));
+		return (false);
+	if (!png_decompress(png))
+		return (false);
+	return (true);
 }
 
 static bool	png_parse_first(t_png *png, t_png_chunk *chunk)

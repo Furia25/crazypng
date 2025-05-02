@@ -49,7 +49,7 @@ typedef enum e_png_color_type
 	PNG_COLOR_GRAYSCALE			= 0,
 	PNG_COLOR_RGB				= 2,
 	PNG_COLOR_PALETTE			= 3,
-	PNG_COLOR_ALPHA_GRAYSCALE 	= 4,
+	PNG_COLOR_ALPHA_GRAYSCALE	= 4,
 	PNG_COLOR_RGBA				= 6
 }	t_png_color_type;
 
@@ -63,13 +63,6 @@ typedef struct s_png_chunk_data_IHDR
 	uint8_t		filter;
 	uint8_t		interlace;
 }	t_png_chunk_data_IHDR;
-
-typedef struct s_png_deflate_buffer
-{
-	uint8_t	*data;
-	size_t	size;
-	size_t	capacity;
-}	t_png_deflate_buffer;
 
 typedef struct s_png_chunk_header
 {
@@ -96,8 +89,8 @@ typedef struct s_png
 {
 	t_cp_file				*file;
 	t_png_chunk_data_IHDR	header;
-	t_png_deflate_buffer	uncompressed_data;
-	t_png_deflate_buffer	data;
+	t_cp_buffer				uncompressed_data;
+	t_cp_buffer				data;
 	union
 	{
 		uint8_t		*pixels_8bit;
@@ -107,8 +100,6 @@ typedef struct s_png
 	uint32_t				palette_size;
 	bool					convert_endian;
 }	t_png;
-
-bool				chunk_idat_add(t_png_deflate_buffer *data, t_png_chunk *chnk);
 
 bool				chunk_is_critical(t_png_chunk_type type);
 bool				chunk_precede_idat(t_png_chunk_type type);
@@ -121,5 +112,6 @@ bool				png_chunk_read(t_png *png, t_png_chunk *chunk);
 t_png				*png_open(char *file_name);
 void				png_close(t_png *png);
 bool				png_parse(t_png *png);
+bool				png_decompress(t_png *png);
 
 #endif

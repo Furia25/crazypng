@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test_main.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: vdurand <vdurand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 11:50:22 by vdurand           #+#    #+#             */
-/*   Updated: 2025/05/01 22:57:06 by val              ###   ########.fr       */
+/*   Updated: 2025/05/02 16:05:45 by vdurand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
 #include "mlx_int.h"
 #include "mlx.h"
 
-typedef struct	s_vars {
+typedef struct s_vars
+{
 	void	*mlx;
 	void	*win;
 }				t_vars;

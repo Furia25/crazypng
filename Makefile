@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: val <val@student.42.fr>                    +#+  +:+       +#+         #
+#    By: vdurand <vdurand@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/13 23:20:17 by val               #+#    #+#              #
-#    Updated: 2025/05/01 17:17:58 by val              ###   ########.fr        #
+#    Updated: 2025/05/02 16:55:32 by vdurand          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,14 +67,17 @@ endif
 
 
 SRC_FILES = \
-	utils.c \
+	utils/utils.c \
+	utils/buffer_utils.c \
+	utils/bitstream_utils.c \
 	test_main.c \
 	png_managing.c \
 	png_parsing.c \
 	png_chunk_parsing.c \
 	png_chunk_utils.c \
 	png_chunk_IHDR.c \
-	png_chunk_IDAT.c
+	png_decompress.c \
+	deflate/inflate.c \
 
 SRC = $(patsubst %.c, $(SRC_DIR)/%.c, $(SRC_FILES))
 OBJ = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))
