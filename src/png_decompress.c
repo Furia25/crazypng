@@ -6,7 +6,7 @@
 /*   By: vdurand <vdurand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 16:22:45 by vdurand           #+#    #+#             */
-/*   Updated: 2025/05/02 16:54:36 by vdurand          ###   ########.fr       */
+/*   Updated: 2025/05/02 17:31:31 by vdurand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ bool	png_decompress(t_png *png)
 
 static bool	png_inflate(t_png *png)
 {
-	if (!cp_inflate(&png->data, png->uncompressed_data.data))
+	if (!cp_inflate(&png->data, \
+		png->uncompressed_data.data, png->uncompressed_data.size))
 		return (false);
 	return (true);
 }

@@ -6,7 +6,7 @@
 /*   By: vdurand <vdurand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 11:50:22 by vdurand           #+#    #+#             */
-/*   Updated: 2025/05/02 16:05:45 by vdurand          ###   ########.fr       */
+/*   Updated: 2025/05/02 17:24:22 by vdurand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,12 @@ int	key_hook(int keycode, t_vars *vars)
 	if (keycode == XK_space)
 	{
 		png = png_open("test_files/dinosaure.png");
-		if (!png)
+		if (png)
+		{
+			printf(" SIZE : %ld\n", png->uncompressed_data.size);
+		}
+		else
 			perror("TEST");
-		printf(" SIZE : %ld\n", png->uncompressed_data.size);
 		png_close(png);
 	}
 	if (keycode == XK_Escape)

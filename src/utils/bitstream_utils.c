@@ -6,13 +6,14 @@
 /*   By: vdurand <vdurand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 15:55:01 by vdurand           #+#    #+#             */
-/*   Updated: 2025/05/02 16:05:57 by vdurand          ###   ########.fr       */
+/*   Updated: 2025/05/02 17:42:47 by vdurand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "crazypng_deflate.h"
 
 /*LSB FIRST bitstream*/
+
 uint32_t	read_bits(t_bitstream *bs, int count)
 {
 	uint32_t	result;

@@ -6,13 +6,20 @@
 /*   By: vdurand <vdurand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 14:45:54 by vdurand           #+#    #+#             */
-/*   Updated: 2025/05/02 16:53:54 by vdurand          ###   ########.fr       */
+/*   Updated: 2025/05/02 17:30:48 by vdurand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CRAZYPNG_DEFLATE_H
 # define CRAZYPNG_DEFLATE_H
 # include "crazypng_utils.h"
+
+# define INFLATE_ERROR_UNSUPPORTED_METHOD	\
+	"Decompression Error : Unsupported compression method\n"
+# define INFLATE_ERROR_UNSUPPORTED_WINDOW	\
+	"Decompression Error : Unsupported LZ77 window size\n"
+# define INFLATE_ERROR_CHECKSUM	\
+	"Decompression Error : Invalid header checksum\n"
 
 # define LZ77_WINDOW_SIZE	32768
 
@@ -40,6 +47,6 @@ typedef struct s_inflate_context
 }	t_inflate_context;
 
 uint32_t	read_bits(t_bitstream *bs, int count);
-bool		cp_inflate(t_cp_buffer *output, uint8_t *input);
+bool		cp_inflate(t_cp_buffer *output, uint8_t *input, size_t input_size);
 
 #endif
