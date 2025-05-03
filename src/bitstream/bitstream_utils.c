@@ -6,7 +6,7 @@
 /*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 15:55:01 by vdurand           #+#    #+#             */
-/*   Updated: 2025/05/03 15:23:32 by val              ###   ########.fr       */
+/*   Updated: 2025/05/03 22:05:41 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ uint64_t	bs_read_bits(t_bitstream *bs, int count)
 	uint64_t	result;
 	int			i;
 
-	if (count <= 0 || count > 64)
+	if (count <= 0 || count > 64 || bs->overflowed)
 		return (0);
 	result = 0;
 	i = 0;

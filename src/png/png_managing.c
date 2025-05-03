@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   png_managing.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vdurand <vdurand@student.42.fr>            +#+  +:+       +#+        */
+/*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 11:48:38 by vdurand           #+#    #+#             */
-/*   Updated: 2025/05/02 16:57:12 by vdurand          ###   ########.fr       */
+/*   Updated: 2025/05/03 21:21:08 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ t_png	*png_open(char *file_name)
 		png_close(png);
 		return (NULL);
 	}
-	png->convert_endian = !ft_isbigendian();
+	png->convert_endian = ft_isbigendian();
 	if (!png_parse(png))
 	{
 		png_close(png);

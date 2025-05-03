@@ -6,7 +6,7 @@
 /*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 16:37:16 by vdurand           #+#    #+#             */
-/*   Updated: 2025/05/03 20:52:16 by val              ###   ########.fr       */
+/*   Updated: 2025/05/04 00:13:09 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,18 @@ bool	cp_inflate(t_cp_buffer *output, uint8_t *input, size_t input_size)
 	if (!is_zlib_stream(&context.bit_stream))
 	{
 		huffman_free_table(context.huffman_fixed);
+		huffman_free_table(context.distance_fixed);
 		return (false);
 	}
 	if (!inflate_read_blocks(&context))
 	{
+		ft_putstr_fd(INFLATE_ERROR_BLOCK, 2);
 		huffman_free_table(context.huffman_fixed);
+		huffman_free_table(context.distance_fixed);
 		return (false);
 	}
 	huffman_free_table(context.huffman_fixed);
+	huffman_free_table(context.distance_fixed);
 	return (true);
 }
 
@@ -48,8 +52,12 @@ static bool	inflate_init_context(t_inflate_context *context, \
 	context->output = output;
 	context->bit_stream.data = input;
 	context->bit_stream.size = length;
+	context->convert_endian = ft_isbigendian();
 	context->huffman_fixed = huffman_deflate_table();
 	if (!context->huffman_fixed)
+		return (false);
+	context->distance_fixed = huffman_deflate_dist_table();
+	if (!context->distance_fixed)
 		return (false);
 	return (true);
 }
@@ -61,6 +69,7 @@ static bool	inflate_read_blocks(t_inflate_context *context)
 	bool		finished;
 
 	finished = false;
+	ft_putstr_fd("test1\n", 2);
 	while (!finished)
 	{
 		if (!bs_sread_8bits(&context->bit_stream, 1, &bfinal))
@@ -71,6 +80,7 @@ static bool	inflate_read_blocks(t_inflate_context *context)
 		if (!handle_block_decompression(context, btype))
 			return (false);
 	}
+	ft_putstr_fd("test2\n", 2);
 	return (true);
 }
 
@@ -83,11 +93,11 @@ static bool	handle_block_decompression(t_inflate_context *context, \
 	}
 	else if (btype == 1)
 	{
-		return (inflate_block_fixed(context));
+		return (true);
 	}
 	else if (btype == 2)
 	{
-		return (inflate_block_dynamic(context));
+		return (true);
 	}
 	else
 		return (false);
@@ -116,7 +126,7 @@ static bool	is_zlib_stream(t_bitstream *stream)
 	checksum = (cmf << 8) | flg;
 	if (checksum % 31 != 0)
 	{
-		ft_putstr_fd(INFLATE_ERROR_CHECKSUM, 2);
+		ft_putstr_fd(INFLATE_ERROR_HEADER, 2);
 		return (false);
 	}
 	return (true);

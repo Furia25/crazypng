@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   crazypng_utils.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vdurand <vdurand@student.42.fr>            +#+  +:+       +#+        */
+/*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 00:22:01 by val               #+#    #+#             */
-/*   Updated: 2025/05/02 16:29:34 by vdurand          ###   ########.fr       */
+/*   Updated: 2025/05/03 21:22:07 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,8 @@ void		cp_buffer_reset(t_cp_buffer *buffer);
 t_cp_file	*cp_open(char *name, int flags);
 void		cp_close(t_cp_file *file);
 size_t		cp_fread(void *ptr, size_t size, size_t nmemb, t_cp_file *file);
+
 uint32_t	swap_endian32(uint32_t value);
+uint16_t	swap_endian16(uint16_t value);
+
 #endif

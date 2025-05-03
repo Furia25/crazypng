@@ -6,7 +6,7 @@
 /*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 14:55:13 by val               #+#    #+#             */
-/*   Updated: 2025/05/03 15:39:17 by val              ###   ########.fr       */
+/*   Updated: 2025/05/03 23:56:42 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,9 @@ typedef struct s_bitstream
 	uint8_t			bit_pos;	// Position du prochain bit (0 à 7)
 	int				overflowed;
 }	t_bitstream;
+
+uint64_t	bs_peek_bits(t_bitstream *bs, int count);
+bool		bs_consume_bits(t_bitstream *stream, size_t n);
 
 uint64_t	bs_read_bits(t_bitstream *bs, int count);
 

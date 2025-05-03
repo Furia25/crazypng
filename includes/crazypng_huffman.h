@@ -6,13 +6,14 @@
 /*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 20:04:07 by val               #+#    #+#             */
-/*   Updated: 2025/05/03 20:48:20 by val              ###   ########.fr       */
+/*   Updated: 2025/05/03 22:32:43 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CRAZYPNG_HUFFMAN_H
 # define CRAZYPNG_HUFFMAN_H
 # include "crazypng_utils.h"
+# include "crazypng_bitstream.h"
 
 typedef struct s_huffman_code
 {
@@ -28,6 +29,9 @@ typedef struct s_huffman_table
 }	t_huffman_table;
 
 t_huffman_table	*huffman_deflate_table(void);
+t_huffman_table	*huffman_deflate_dist_table(void);
 t_huffman_table	*huffman_new_table(size_t count);
 void			huffman_free_table(t_huffman_table *table);
+int				huffman_decode(t_bitstream *stream, t_huffman_table *tab);
+
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vdurand <vdurand@student.42.fr>            +#+  +:+       +#+        */
+/*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 23:55:54 by val               #+#    #+#             */
-/*   Updated: 2025/05/02 16:27:34 by vdurand          ###   ########.fr       */
+/*   Updated: 2025/05/03 21:21:58 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,9 @@ uint32_t	swap_endian32(uint32_t value)
 {
 	return (((value >> 24) & 0xFF) | ((value >> 8) & 0xFF00) | \
 		((value << 8) & 0xFF0000) | ((value << 24) & 0xFF000000));
+}
+
+uint16_t	swap_endian16(uint16_t value)
+{
+	return ((value >> 8) | (value << 8));
 }

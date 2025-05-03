@@ -6,7 +6,7 @@
 #    By: val <val@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/13 23:20:17 by val               #+#    #+#              #
-#    Updated: 2025/05/03 20:13:05 by val              ###   ########.fr        #
+#    Updated: 2025/05/04 00:15:16 by val              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -71,17 +71,21 @@ SRC_FILES = \
 	utils/buffer_utils.c \
 	bitstream/bitstream_utils.c \
 	bitstream/bitstream_read.c \
+	bitstream/bitstream_misc.c \
 	test_main.c \
-	png_managing.c \
-	png_parsing.c \
-	png_chunk_parsing.c \
-	png_chunk_utils.c \
-	png_chunk_IHDR.c \
-	png_decompress.c \
+	png/png_managing.c \
+	png/png_parsing.c \
+	png/png_chunk_parsing.c \
+	png/png_chunk_utils.c \
+	png/png_chunk_IHDR.c \
+	png/png_decompress.c \
 	deflate/inflate.c \
 	deflate/lz77.c \
 	deflate/deflate_utils.c \
-	deflate/inflate_blocks.c
+	deflate/inflate_decode.c \
+	huffman/huffman_decode.c \
+	huffman/huffman_deflate.c \
+	huffman/huffman_managing.c
 
 SRC = $(patsubst %.c, $(SRC_DIR)/%.c, $(SRC_FILES))
 OBJ = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))

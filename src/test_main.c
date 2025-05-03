@@ -6,7 +6,7 @@
 /*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 11:50:22 by vdurand           #+#    #+#             */
-/*   Updated: 2025/05/03 21:10:20 by val              ###   ########.fr       */
+/*   Updated: 2025/05/03 22:31:32 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,12 @@ int	main(void)
 	t_vars	vars;
 
 	vars.mlx = mlx_init();
+	if (!vars.mlx)
+		return (EXIT_FAILURE);
 	vars.win = mlx_new_window(vars.mlx, 640, 480, "PNG TEST");
 	mlx_key_hook(vars.win, key_hook, &vars);
 	mlx_loop(vars.mlx);
 	mlx_destroy_window(vars.mlx, vars.win);
 	mlx_destroy_display(vars.mlx);
+	free(vars.mlx);
 }

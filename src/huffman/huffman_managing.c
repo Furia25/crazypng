@@ -6,7 +6,7 @@
 /*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 20:42:37 by val               #+#    #+#             */
-/*   Updated: 2025/05/03 20:50:05 by val              ###   ########.fr       */
+/*   Updated: 2025/05/03 22:31:05 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_huffman_table	*huffman_new_table(size_t count)
 {
 	t_huffman_table	*result;
 
-	result = ft_calloc(1, sizeof(t_huffman_code));
+	result = ft_calloc(1, sizeof(t_huffman_table));
 	if (!result)
 		return (NULL);
 	result->codes = ft_calloc(count, sizeof(t_huffman_code));
