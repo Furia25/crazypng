@@ -6,7 +6,7 @@
 #    By: val <val@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/13 23:20:17 by val               #+#    #+#              #
-#    Updated: 2025/05/03 15:38:28 by val              ###   ########.fr        #
+#    Updated: 2025/05/03 20:13:05 by val              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -81,7 +81,7 @@ SRC_FILES = \
 	deflate/inflate.c \
 	deflate/lz77.c \
 	deflate/deflate_utils.c \
-	deflate/inflate_block_uncompressed.c
+	deflate/inflate_blocks.c
 
 SRC = $(patsubst %.c, $(SRC_DIR)/%.c, $(SRC_FILES))
 OBJ = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))

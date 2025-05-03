@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test_main.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vdurand <vdurand@student.42.fr>            +#+  +:+       +#+        */
+/*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 11:50:22 by vdurand           #+#    #+#             */
-/*   Updated: 2025/05/02 17:24:22 by vdurand          ###   ########.fr       */
+/*   Updated: 2025/05/03 21:10:20 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	key_hook(int keycode, t_vars *vars)
 
 	if (keycode == XK_space)
 	{
+		printf("ENDIANESS : %d\n", ft_isbigendian());
 		png = png_open("test_files/dinosaure.png");
 		if (png)
 		{

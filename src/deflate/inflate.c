@@ -6,13 +6,13 @@
 /*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 16:37:16 by vdurand           #+#    #+#             */
-/*   Updated: 2025/05/03 15:36:47 by val              ###   ########.fr       */
+/*   Updated: 2025/05/03 20:52:16 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "crazypng_deflate.h"
 
-static void	inflate_init_context(t_inflate_context *context, \
+static bool	inflate_init_context(t_inflate_context *context, \
 	t_cp_buffer *output, uint8_t *input, size_t length);
 static bool	inflate_read_blocks(t_inflate_context *context);
 static bool	is_zlib_stream(t_bitstream *stream);
@@ -25,10 +25,31 @@ bool	cp_inflate(t_cp_buffer *output, uint8_t *input, size_t input_size)
 {
 	t_inflate_context	context;
 
-	inflate_init_context(&context, output, input, input_size);
-	if (!is_zlib_stream(&context.bit_stream))
+	if (!inflate_init_context(&context, output, input, input_size))
 		return (false);
+	if (!is_zlib_stream(&context.bit_stream))
+	{
+		huffman_free_table(context.huffman_fixed);
+		return (false);
+	}
 	if (!inflate_read_blocks(&context))
+	{
+		huffman_free_table(context.huffman_fixed);
+		return (false);
+	}
+	huffman_free_table(context.huffman_fixed);
+	return (true);
+}
+
+static bool	inflate_init_context(t_inflate_context *context, \
+	t_cp_buffer *output, uint8_t *input, size_t length)
+{
+	ft_memset(context, 0, sizeof(t_inflate_context));
+	context->output = output;
+	context->bit_stream.data = input;
+	context->bit_stream.size = length;
+	context->huffman_fixed = huffman_deflate_table();
+	if (!context->huffman_fixed)
 		return (false);
 	return (true);
 }
@@ -62,23 +83,14 @@ static bool	handle_block_decompression(t_inflate_context *context, \
 	}
 	else if (btype == 1)
 	{
-		return (true);
+		return (inflate_block_fixed(context));
 	}
 	else if (btype == 2)
 	{
-		return (true);
+		return (inflate_block_dynamic(context));
 	}
 	else
 		return (false);
-}
-
-static void	inflate_init_context(t_inflate_context *context, \
-	t_cp_buffer *output, uint8_t *input, size_t length)
-{
-	ft_memset(context, 0, sizeof(t_inflate_context));
-	context->output = output;
-	context->bit_stream.data = input;
-	context->bit_stream.size = length;
 }
 
 static bool	is_zlib_stream(t_bitstream *stream)

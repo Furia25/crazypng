@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   inflate_block_uncompressed.c                       :+:      :+:    :+:   */
+/*   inflate_blocks.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 15:03:37 by val               #+#    #+#             */
-/*   Updated: 2025/05/03 15:39:53 by val              ###   ########.fr       */
+/*   Updated: 2025/05/03 21:13:40 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,11 @@ bool	inflate_block_uncompressed(t_inflate_context *context)
 		return (false);
 	if (!bs_sread_16bits(bs, 16, &len) || !bs_sread_16bits(bs, 16, &nlen))
 		return (false);
+	if (context->convert_endian)
+	{
+		len = swap_endian16(len);
+		nlen = swap_endian16(nlen);
+	}
 	if ((len ^ nlen) != 0xFFFF)
 		return (false);
 	if (!bs_read_nbytes(bs, context->output, len))
@@ -31,4 +36,14 @@ bool	inflate_block_uncompressed(t_inflate_context *context)
 	lz77_window_push_bytes(&context->reference_window, \
 		context->output->data + context->output_pos, len);
 	return (true);
+}
+
+bool	inflate_block_fixed(t_inflate_context *context)
+{
+	
+}
+
+bool	inflate_block_dynamic(t_inflate_context *context)
+{
+	
 }
