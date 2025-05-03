@@ -6,7 +6,7 @@
 /*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 14:45:54 by vdurand           #+#    #+#             */
-/*   Updated: 2025/05/04 00:32:08 by val              ###   ########.fr       */
+/*   Updated: 2025/05/04 01:26:52 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ typedef struct s_inflate_context
 	t_bitstream		bit_stream;
 	t_lz77_window	reference_window;
 	t_cp_buffer		*output;
-	size_t			output_pos;
 	t_huffman_table	*huffman_fixed;
 	t_huffman_table	*distance_fixed;
 }	t_inflate_context;
@@ -103,8 +102,12 @@ bool	lz77_window_push_bytes(t_lz77_window *win, \
 /*Inflate algorithm*/
 bool	cp_inflate(t_cp_buffer *output, uint8_t *input, size_t input_size);
 
+
 bool	inflate_block_uncompressed(t_inflate_context *context);
 bool	inflate_block_huffman(t_inflate_context *context, \
 	t_huffman_table *linlen, t_huffman_table *distance);
+
+bool	inflate_copy_reference(t_inflate_context *context, \
+	int distance, int length);
 
 #endif

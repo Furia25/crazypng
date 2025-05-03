@@ -6,7 +6,7 @@
 /*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 15:29:56 by val               #+#    #+#             */
-/*   Updated: 2025/05/03 15:31:38 by val              ###   ########.fr       */
+/*   Updated: 2025/05/04 01:26:28 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ bool	lz77_window_push_bytes(t_lz77_window *win, \
 	{
 		win->buffer[win->pos] = src[index];
 		win->pos = (win->pos + 1) % LZ77_WINDOW_SIZE;
+		index++;
 	}
 	return (true);
 }
