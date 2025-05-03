@@ -6,7 +6,7 @@
 /*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 16:37:16 by vdurand           #+#    #+#             */
-/*   Updated: 2025/05/02 19:29:49 by val              ###   ########.fr       */
+/*   Updated: 2025/05/03 15:36:47 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,16 @@
 
 static void	inflate_init_context(t_inflate_context *context, \
 	t_cp_buffer *output, uint8_t *input, size_t length);
-static bool	read_block_header(t_inflate_context *context, \
-	uint8_t *bfinal, uint8_t *btype);
 static bool	inflate_read_blocks(t_inflate_context *context);
 static bool	is_zlib_stream(t_bitstream *stream);
+static bool	handle_block_decompression(t_inflate_context *context, \
+	uint8_t btype);
 
 /*Deflate decompression algorithm*/
 
 bool	cp_inflate(t_cp_buffer *output, uint8_t *input, size_t input_size)
 {
 	t_inflate_context	context;
-
 
 	inflate_init_context(&context, output, input, input_size);
 	if (!is_zlib_stream(&context.bit_stream))
@@ -43,30 +42,34 @@ static bool	inflate_read_blocks(t_inflate_context *context)
 	finished = false;
 	while (!finished)
 	{
-		if (!read_block_header(context, &bfinal, &btype))
+		if (!bs_sread_8bits(&context->bit_stream, 1, &bfinal))
 			return (false);
-		if (bfinal)
-			finished = true;
-		if (btype == 0)
-		{
-			ft_putstr_fd("Pokemon go", 2);
-		}
-		else
-		{
-			ft_putstr_fd("Bite", 2);
-		}
+		if (!bs_sread_8bits(&context->bit_stream, 2, &btype))
+			return (false);
+		finished = bfinal;
+		if (!handle_block_decompression(context, btype))
+			return (false);
 	}
 	return (true);
 }
 
-static bool	read_block_header(t_inflate_context *context, \
-	uint8_t *bfinal, uint8_t *btype)
+static bool	handle_block_decompression(t_inflate_context *context, \
+	uint8_t btype)
 {
-	if (!bs_sread_8bits(&context->bit_stream, 1, bfinal))
+	if (btype == 0)
+	{
+		return (inflate_block_uncompressed(context));
+	}
+	else if (btype == 1)
+	{
+		return (true);
+	}
+	else if (btype == 2)
+	{
+		return (true);
+	}
+	else
 		return (false);
-	if (!bs_sread_8bits(&context->bit_stream, 2, btype))
-		return (false);
-	return (true);
 }
 
 static void	inflate_init_context(t_inflate_context *context, \
@@ -93,7 +96,7 @@ static bool	is_zlib_stream(t_bitstream *stream)
 		ft_putstr_fd(INFLATE_ERROR_UNSUPPORTED_METHOD, 2);
 		return (false);
 	}
-	if((cmf >> 4) > 7)
+	if ((cmf >> 4) > 7)
 	{
 		ft_putstr_fd(INFLATE_ERROR_UNSUPPORTED_WINDOW, 2);
 		return (false);

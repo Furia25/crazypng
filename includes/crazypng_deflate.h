@@ -6,13 +6,14 @@
 /*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 14:45:54 by vdurand           #+#    #+#             */
-/*   Updated: 2025/05/02 19:18:27 by val              ###   ########.fr       */
+/*   Updated: 2025/05/03 15:31:55 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CRAZYPNG_DEFLATE_H
 # define CRAZYPNG_DEFLATE_H
 # include "crazypng_utils.h"
+# include "crazypng_bitstream.h"
 
 # define INFLATE_ERROR_UNSUPPORTED_METHOD	\
 	"Decompression Error : Unsupported compression method\n"
@@ -29,15 +30,6 @@ typedef struct s_lz77_window
 	size_t		pos;
 }	t_lz77_window;
 
-typedef struct s_bitstream
-{
-	const uint8_t	*data;		// Pointeur vers les données compressées
-	size_t			size;		// Taille totale
-	size_t			byte_pos;	// Position dans le tableau de bytes
-	uint8_t			bit_pos;	// Position du prochain bit (0 à 7)
-	int				overflowed;
-}	t_bitstream;
-
 typedef struct s_inflate_context
 {
 	t_bitstream		bit_stream;
@@ -46,13 +38,13 @@ typedef struct s_inflate_context
 	size_t			output_pos;
 }	t_inflate_context;
 
-uint64_t	bs_read_bits(t_bitstream *bs, int count);
+bool	lz77_window_push(t_lz77_window *win, uint8_t byte);
+bool	lz77_window_push_bytes(t_lz77_window *win, \
+	const uint8_t *src, size_t len);
 
-bool	bs_sread_8bits(t_bitstream *bs, int count, uint8_t *value);
-bool	bs_sread_16bits(t_bitstream *bs, int count, uint16_t *value);
-bool	bs_sread_32bits(t_bitstream *bs, int count, uint32_t *value);
-bool	bs_sread_64bits(t_bitstream *bs, int count, uint64_t *value);
+/*Inflate algorithm*/
+bool	cp_inflate(t_cp_buffer *output, uint8_t *input, size_t input_size);
 
-bool		cp_inflate(t_cp_buffer *output, uint8_t *input, size_t input_size);
+bool	inflate_block_uncompressed(t_inflate_context *context);
 
 #endif

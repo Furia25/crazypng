@@ -1,45 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   bitstream_utils.c                                  :+:      :+:    :+:   */
+/*   bitstream_read.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/02 15:55:01 by vdurand           #+#    #+#             */
-/*   Updated: 2025/05/02 19:19:51 by val              ###   ########.fr       */
+/*   Created: 2025/05/03 14:51:29 by val               #+#    #+#             */
+/*   Updated: 2025/05/03 15:23:40 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "crazypng_deflate.h"
 
-/*LSB FIRST bitstream*/
-
-uint64_t	bs_read_bits(t_bitstream *bs, int count)
+bool	bs_read_nbytes(t_bitstream *bs, t_cp_buffer *buffer, size_t len)
 {
-	uint64_t	result;
-	int			i;
-
-	if (count <= 0 || count > 64)
-		return (0);
-	result = 0;
-	i = 0;
-	while (i < count)
+	if (len > SIZE_MAX / 8)
+		return (false);
+	if (bs->byte_pos + len > bs->size)
 	{
-		if (bs->byte_pos >= bs->size)
-		{
-			bs->overflowed = true;
-			return (0);
-		}
-		result |= (uint32_t)((bs->data[bs->byte_pos] >> bs->bit_pos) & 1) << i;
-		bs->bit_pos++;
-		if (bs->bit_pos == 8)
-		{
-			bs->bit_pos = 0;
-			bs->byte_pos++;
-		}
-		i++;
+		bs->overflowed = true;
+		return (false);
 	}
-	return (result);
+	if (!cp_buffer_add(buffer, &bs->data[bs->byte_pos], len * 8))
+		return (false);
+	bs->byte_pos += len;
+	bs->bit_pos = 0;
+	return (true);
 }
 
 bool	bs_sread_64bits(t_bitstream *bs, int count, uint64_t *value)
