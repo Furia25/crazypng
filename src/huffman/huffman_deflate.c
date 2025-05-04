@@ -6,7 +6,7 @@
 /*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 20:48:50 by val               #+#    #+#             */
-/*   Updated: 2025/05/03 22:26:02 by val              ###   ########.fr       */
+/*   Updated: 2025/05/04 01:43:40 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,10 @@ t_huffman_table	*huffman_deflate_dist_table(void)
 	i = 0;
 	temp = table->codes;
 	while (i <= 29)
+	{
 		set_huffman_code(temp + i, i, is_bigendian, 5);
+		i++;
+	}
 	return (table);
 }
 

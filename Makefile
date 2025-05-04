@@ -6,7 +6,7 @@
 #    By: val <val@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/13 23:20:17 by val               #+#    #+#              #
-#    Updated: 2025/05/04 00:15:16 by val              ###   ########.fr        #
+#    Updated: 2025/05/04 01:36:26 by val              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,7 +70,7 @@ SRC_FILES = \
 	utils/utils.c \
 	utils/buffer_utils.c \
 	bitstream/bitstream_utils.c \
-	bitstream/bitstream_read.c \
+	bitstream/bitstream_reads.c \
 	bitstream/bitstream_misc.c \
 	test_main.c \
 	png/png_managing.c \
@@ -83,6 +83,7 @@ SRC_FILES = \
 	deflate/lz77.c \
 	deflate/deflate_utils.c \
 	deflate/inflate_decode.c \
+	deflate/inflate_decode_huffman.c \
 	huffman/huffman_decode.c \
 	huffman/huffman_deflate.c \
 	huffman/huffman_managing.c

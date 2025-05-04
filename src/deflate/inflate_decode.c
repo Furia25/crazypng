@@ -6,7 +6,7 @@
 /*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 15:03:37 by val               #+#    #+#             */
-/*   Updated: 2025/05/04 01:26:34 by val              ###   ########.fr       */
+/*   Updated: 2025/05/04 01:35:59 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ bool	inflate_copy_reference(t_inflate_context *context, \
 	while (index < length)
 	{
 		byte = context->reference_window.buffer[temp_pos];
-		if (!cp_buffer_add(&context->output, &byte, 1))
+		if (!cp_buffer_add(context->output, &byte, 1))
 			return (false);
 		lz77_window_push(&context->reference_window, byte);
 		temp_pos = (temp_pos + 1) % LZ77_WINDOW_SIZE;
