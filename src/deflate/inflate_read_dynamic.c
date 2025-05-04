@@ -6,7 +6,7 @@
 /*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 14:53:34 by val               #+#    #+#             */
-/*   Updated: 2025/05/04 20:42:44 by val              ###   ########.fr       */
+/*   Updated: 2025/05/04 22:43:02 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,15 +46,12 @@ static bool	create_dynamic_tables(t_inflate_dynamic_data *data, \
 	int		litlen_lengths[DEFLATE_LL_TABLE_SIZE];
 	int		dist_lengths[DEFLATE_D_TABLE_SIZE];
 
-	ft_putstr_fd("La bite1\n", 2);
 	if (!read_dynamic_code_lengths(data, &data->clen_hufftable, \
 		litlen_lengths, data->hlit))
 		return (false);
-	ft_putstr_fd("La bite2\n", 2);
 	if (!read_dynamic_code_lengths(data, &data->clen_hufftable, \
 		dist_lengths, data->hdist))
 		return (false);
-	ft_putstr_fd("La bite3\n", 2);
 	*litlen = huffman_new_table(data->hlit);
 	if (!*litlen)
 		return (false);

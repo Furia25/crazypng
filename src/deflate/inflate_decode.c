@@ -6,7 +6,7 @@
 /*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 15:03:37 by val               #+#    #+#             */
-/*   Updated: 2025/05/04 14:53:49 by val              ###   ########.fr       */
+/*   Updated: 2025/05/04 22:35:43 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ bool	inflate_copy_reference(t_inflate_context *context, \
 	size_t	temp_pos;
 	int		index;
 
-	temp_pos = (context->reference_window.pos - distance) % LZ77_WINDOW_SIZE;
+	temp_pos = (context->reference_window.pos - distance + LZ77_WINDOW_SIZE) % LZ77_WINDOW_SIZE;
 	index = 0;
 	while (index < length)
 	{

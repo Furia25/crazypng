@@ -6,7 +6,7 @@
 /*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 19:06:11 by val               #+#    #+#             */
-/*   Updated: 2025/05/04 21:58:40 by val              ###   ########.fr       */
+/*   Updated: 2025/05/04 22:42:53 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,8 @@ static bool fill_repeat_last(t_inflate_dynamic_data *data, \
 {
     uint16_t extra;
 
-    if (data->temp_last > 15)
-    {
-        ft_putstr_fd("Invalid CLEN symbol : Last not set\n", 2);
-        return (false);
-    }
+	if (extra_bits == 2 && data->temp_last == 0)
+    	return (false);
 	extra = 0;
     if (!bs_sread_16bits(&data->context->bit_stream, extra_bits, &extra))
         return (false);
@@ -89,8 +86,6 @@ static bool fill_repeat_last(t_inflate_dynamic_data *data, \
         ft_putstr_fd("\n", 2);
         return (false);
     }
-
-    // Remplir le code_lengths avec les valeurs de temp_last
     while (extra)
     {
         code_lengths[data->temp_i] = data->temp_last;
