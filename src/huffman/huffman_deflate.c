@@ -6,7 +6,7 @@
 /*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 20:48:50 by val               #+#    #+#             */
-/*   Updated: 2025/05/04 01:43:40 by val              ###   ########.fr       */
+/*   Updated: 2025/05/04 03:10:57 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_huffman_table	*huffman_deflate_table(void)
 	t_huffman_table	*table;
 	bool			is_bigendian;
 
-	table = huffman_new_table(288);
+	table = huffman_new_table(DEFLATE_HUFFMAN_FIXED_SIZE);
 	if (!table)
 		return (NULL);
 	is_bigendian = ft_isbigendian();

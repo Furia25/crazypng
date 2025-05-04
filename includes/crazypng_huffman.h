@@ -6,7 +6,7 @@
 /*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 20:04:07 by val               #+#    #+#             */
-/*   Updated: 2025/05/03 22:32:43 by val              ###   ########.fr       */
+/*   Updated: 2025/05/04 03:31:59 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,13 @@
 # include "crazypng_utils.h"
 # include "crazypng_bitstream.h"
 
+# define DEFLATE_HUFFMAN_FIXED_SIZE	288
+
 typedef struct s_huffman_code
 {
 	uint16_t	code;
 	uint8_t		bits;
+	uint16_t	value;
 }	t_huffman_code;
 
 typedef struct s_huffman_table

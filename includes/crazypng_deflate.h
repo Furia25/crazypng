@@ -6,7 +6,7 @@
 /*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 14:45:54 by vdurand           #+#    #+#             */
-/*   Updated: 2025/05/04 01:26:52 by val              ###   ########.fr       */
+/*   Updated: 2025/05/04 03:36:24 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,6 @@
 
 # define LZ77_WINDOW_SIZE	32768
 
-# define DEFLATE_HUFFMAN_FIXED_SIZE	288
-
 typedef struct s_lz77_window
 {
 	uint8_t		buffer[LZ77_WINDOW_SIZE];
@@ -45,11 +43,20 @@ typedef struct s_inflate_context
 	t_huffman_table	*distance_fixed;
 }	t_inflate_context;
 
-typedef struct s_code_info
+# define DEFLATE_CLEN_SIZE	19
+
+typedef struct s_inflate_dynamic_data
 {
-	uint16_t	base;
-	uint8_t		extra_bits;
-}	t_code_info;
+	uint8_t			hlit;
+	uint8_t			hdist;
+	uint8_t			hclen;
+	int				clen_tab[DEFLATE_CLEN_SIZE];
+	t_huffman_table *clen_hufftable;
+}	t_inflate_dynamic_data;
+
+static const int	g_inflate_hclen_order[DEFLATE_CLEN_SIZE] = {\
+	16, 17, 18, 0, 8, 7, 9, 6, 10, 5, 11, 4, 12, 3, 13, 2, 14, 1, 15
+};
 
 /*
 ** Tables de longueurs et de distances utilisées dans le décodage DEFLATE
@@ -72,6 +79,12 @@ typedef struct s_code_info
 ** Ces tables sont fixes et communes à tous les blocs DEFLATE, 
 ** qu'ils utilisent Huffman fixe ou dynamique.
 */
+
+typedef struct s_code_info
+{
+	uint16_t	base;
+	uint8_t		extra_bits;
+}	t_code_info;
 
 static const t_code_info	g_deflate_length_table[31] = {\
 	{3, 0}, {4, 0}, {5, 0}, {6, 0}, \
@@ -102,12 +115,13 @@ bool	lz77_window_push_bytes(t_lz77_window *win, \
 /*Inflate algorithm*/
 bool	cp_inflate(t_cp_buffer *output, uint8_t *input, size_t input_size);
 
-
 bool	inflate_block_uncompressed(t_inflate_context *context);
 bool	inflate_block_huffman(t_inflate_context *context, \
 	t_huffman_table *linlen, t_huffman_table *distance);
 
 bool	inflate_copy_reference(t_inflate_context *context, \
 	int distance, int length);
+bool	inflate_get_dynamic(t_inflate_context *context, \
+	t_huffman_table **linlen, t_huffman_table **dist);
 
 #endif

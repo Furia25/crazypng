@@ -6,7 +6,7 @@
 /*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 16:37:16 by vdurand           #+#    #+#             */
-/*   Updated: 2025/05/04 01:42:47 by val              ###   ########.fr       */
+/*   Updated: 2025/05/04 02:40:20 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,21 +88,28 @@ static bool	inflate_read_blocks(t_inflate_context *context)
 static bool	handle_block_decompression(t_inflate_context *context, \
 	uint8_t btype)
 {
+	t_huffman_table	*dynamic_linlen;
+	t_huffman_table	*dynamic_dist;
+	bool			dynamic_result;
+
 	if (btype == 0)
 	{
-		ft_putstr_fd("cool", 2);
 		return (inflate_block_uncompressed(context));
 	}
 	else if (btype == 1)
 	{
-		ft_putstr_fd("nice", 2);
 		return (inflate_block_huffman(context, context->huffman_fixed,\
 			 context->distance_fixed));
 	}
 	else if (btype == 2)
 	{
-		ft_putstr_fd("LA BITE", 2);
-		return (true);
+		if (!inflate_get_dynamic(context, &dynamic_linlen, &dynamic_dist))
+			return (false);
+		dynamic_result = inflate_block_huffman(context, dynamic_linlen,\
+			 dynamic_dist);
+		huffman_free_table(dynamic_linlen);
+		huffman_free_table(dynamic_dist);
+		return (dynamic_result);
 	}
 	else
 		return (false);

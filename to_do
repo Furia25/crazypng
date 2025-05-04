@@ -1,11 +1,6 @@
 CRC check at end of chunk
 UNKNOW CHUNK and critical
 
-Deflate zlib flux : [CMF][FLG] [DEFLATE COMPRESSED DATA] [ADLER32 CHECKSUM]
-
-FLG :
-	Bits 0-4 : FCHECK (checksum sur CMF et FLG)
-	Bit 5 : FDICT → si 1, un dictionnaire est présent juste après (rare)
-	Bits 6-7 : FLEVEL (niveau de compression : 0=rapide, 3=max
-
-0111 1000 | 00 0 CHECK | 
+dynamic Huffman
+filters
+et into > 16 bits channel
