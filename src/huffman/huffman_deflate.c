@@ -6,14 +6,14 @@
 /*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 20:48:50 by val               #+#    #+#             */
-/*   Updated: 2025/05/04 03:10:57 by val              ###   ########.fr       */
+/*   Updated: 2025/05/04 19:33:27 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "crazypng_huffman.h"
 
 static void	set_huffman_code(t_huffman_code *ptr, uint16_t code, \
-	bool endian, uint8_t bits);
+	bool is_bigendian, uint8_t bits);
 static void	fill_literals(t_huffman_code *codes, bool is_bigendian);
 static void	fill_lengths_and_eob(t_huffman_code *codes, bool is_bigendian);
 
@@ -22,7 +22,7 @@ t_huffman_table	*huffman_deflate_table(void)
 	t_huffman_table	*table;
 	bool			is_bigendian;
 
-	table = huffman_new_table(DEFLATE_HUFFMAN_FIXED_SIZE);
+	table = huffman_new_table(DEFLATE_LL_TABLE_SIZE);
 	if (!table)
 		return (NULL);
 	is_bigendian = ft_isbigendian();
@@ -72,29 +72,29 @@ t_huffman_table	*huffman_deflate_dist_table(void)
 {
 	t_huffman_table	*table;
 	t_huffman_code	*temp;
-	size_t			i;
 	bool			is_bigendian;
+	size_t			i;
 
-	table = huffman_new_table(30);
+	table = huffman_new_table(DEFLATE_D_TABLE_SIZE);
 	if (!table)
 		return (NULL);
 	is_bigendian = ft_isbigendian();
 	table->max_bits = 5;
 	i = 0;
 	temp = table->codes;
-	while (i <= 29)
+	while (i < DEFLATE_D_TABLE_SIZE)
 	{
-		set_huffman_code(temp + i, i, is_bigendian, 5);
+		set_huffman_code(temp + i, i, 5, is_bigendian);
 		i++;
 	}
 	return (table);
 }
 
 static void	set_huffman_code(t_huffman_code *ptr, uint16_t code, \
-	bool convert, uint8_t bits)
+	bool is_bigendian, uint8_t bits)
 {
 	ptr->bits = bits;
-	if (convert)
+	if (is_bigendian)
 		ptr->code = swap_endian16(code);
 	else
 		ptr->code = code;

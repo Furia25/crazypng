@@ -6,7 +6,7 @@
 /*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 16:37:16 by vdurand           #+#    #+#             */
-/*   Updated: 2025/05/04 02:40:20 by val              ###   ########.fr       */
+/*   Updated: 2025/05/04 19:46:58 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ bool	cp_inflate(t_cp_buffer *output, uint8_t *input, size_t input_size)
 		huffman_free_table(context.distance_fixed);
 		return (false);
 	}
-	ft_putstr_fd("test", 2);
 	if (!inflate_read_blocks(&context))
 	{
 		ft_putstr_fd(INFLATE_ERROR_BLOCK, 2);
@@ -57,11 +56,9 @@ static bool	inflate_init_context(t_inflate_context *context, \
 	context->huffman_fixed = huffman_deflate_table();
 	if (!context->huffman_fixed)
 		return (false);
-	ft_putstr_fd("cool1", 2);
 	context->distance_fixed = huffman_deflate_dist_table();
 	if (!context->distance_fixed)
 		return (false);
-	ft_putstr_fd("cool2", 2);
 	return (true);
 }
 

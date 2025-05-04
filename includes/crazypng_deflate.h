@@ -6,7 +6,7 @@
 /*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 14:45:54 by vdurand           #+#    #+#             */
-/*   Updated: 2025/05/04 03:36:24 by val              ###   ########.fr       */
+/*   Updated: 2025/05/04 19:45:15 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,20 @@ typedef struct s_inflate_context
 }	t_inflate_context;
 
 # define DEFLATE_CLEN_SIZE	19
+# define DEFLATE_CLEN_MAXBITS	8
+# define DEFLATE_MAXBITS	15
 
 typedef struct s_inflate_dynamic_data
 {
-	uint8_t			hlit;
-	uint8_t			hdist;
-	uint8_t			hclen;
-	int				clen_tab[DEFLATE_CLEN_SIZE];
-	t_huffman_table *clen_hufftable;
+	t_inflate_context	*context;
+	uint16_t			temp_i;
+	uint16_t			temp_size;
+	uint8_t				temp_last;
+	uint8_t				hlit;
+	uint8_t				hdist;
+	uint8_t				hclen;
+	int					clen_tab[DEFLATE_CLEN_SIZE];
+	t_huffman_table 	clen_hufftable;
 }	t_inflate_dynamic_data;
 
 static const int	g_inflate_hclen_order[DEFLATE_CLEN_SIZE] = {\
@@ -123,5 +129,12 @@ bool	inflate_copy_reference(t_inflate_context *context, \
 	int distance, int length);
 bool	inflate_get_dynamic(t_inflate_context *context, \
 	t_huffman_table **linlen, t_huffman_table **dist);
+
+bool	read_dynamic_code_lengths(t_inflate_dynamic_data *data, \
+	t_huffman_table *clen_huff, int *code_lengths,
+	uint16_t total_codes);
+
+void	assign_huffman_codes(t_huffman_code *codes, \
+	const int *code_lengths, size_t count);
 
 #endif

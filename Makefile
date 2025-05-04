@@ -6,7 +6,7 @@
 #    By: val <val@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/13 23:20:17 by val               #+#    #+#              #
-#    Updated: 2025/05/04 01:36:26 by val              ###   ########.fr        #
+#    Updated: 2025/05/04 19:42:35 by val              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -84,6 +84,9 @@ SRC_FILES = \
 	deflate/deflate_utils.c \
 	deflate/inflate_decode.c \
 	deflate/inflate_decode_huffman.c \
+	deflate/inflate_huffman_assign.c \
+	deflate/inflate_read_dynamic.c \
+	deflate/inflate_read_lengths.c \
 	huffman/huffman_decode.c \
 	huffman/huffman_deflate.c \
 	huffman/huffman_managing.c

@@ -6,7 +6,7 @@
 /*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 23:55:54 by val               #+#    #+#             */
-/*   Updated: 2025/05/03 21:21:58 by val              ###   ########.fr       */
+/*   Updated: 2025/05/04 20:38:41 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,4 +78,15 @@ uint32_t	swap_endian32(uint32_t value)
 uint16_t	swap_endian16(uint16_t value)
 {
 	return ((value >> 8) | (value << 8));
+}
+
+uint64_t	reverse_64bits(uint64_t x, int bits)
+{
+	x = ((x >> 1) & 0x5555555555555555ULL) | ((x & 0x5555555555555555ULL) << 1);
+	x = ((x >> 2) & 0x3333333333333333ULL) | ((x & 0x3333333333333333ULL) << 2);
+	x = ((x >> 4) & 0x0F0F0F0F0F0F0F0FULL) | ((x & 0x0F0F0F0F0F0F0F0FULL) << 4);
+	x = ((x >> 8) & 0x00FF00FF00FF00FFULL) | ((x & 0x00FF00FF00FF00FFULL) << 8);
+	x = ((x >> 16) & 0x0000FFFF0000FFFFULL) | ((x & 0x0000FFFF0000FFFFULL) << 16);
+	x = (x >> 32) | (x << 32);
+	return x >> (64 - bits);
 }
