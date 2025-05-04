@@ -6,7 +6,7 @@
 /*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 11:50:22 by vdurand           #+#    #+#             */
-/*   Updated: 2025/05/04 21:59:32 by val              ###   ########.fr       */
+/*   Updated: 2025/05/05 00:43:41 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	key_hook(int keycode, t_vars *vars)
 	if (keycode == XK_space)
 	{
 		printf("ENDIANESS : %d\n", ft_isbigendian());
-		png = png_open("test_files/dinosaure.png");
+		png = png_open("test_files/goal.png");
 		if (png)
 		{
 			printf(" SIZE : %ld\n", png->uncompressed_data.size);

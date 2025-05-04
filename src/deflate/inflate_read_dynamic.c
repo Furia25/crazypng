@@ -6,7 +6,7 @@
 /*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 14:53:34 by val               #+#    #+#             */
-/*   Updated: 2025/05/04 22:43:02 by val              ###   ########.fr       */
+/*   Updated: 2025/05/05 00:56:00 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,12 @@ static bool	create_dynamic_tables(t_inflate_dynamic_data *data, \
 	t_huffman_table **litlen,
 	t_huffman_table **dist)
 {
-	int		litlen_lengths[DEFLATE_LL_TABLE_SIZE];
-	int		dist_lengths[DEFLATE_D_TABLE_SIZE];
+	int		all_lengths[DEFLATE_LL_TABLE_SIZE + DEFLATE_D_TABLE_SIZE];
 
+	ft_memset(all_lengths, 0, (DEFLATE_LL_TABLE_SIZE + DEFLATE_D_TABLE_SIZE) \
+		* sizeof(int));
 	if (!read_dynamic_code_lengths(data, &data->clen_hufftable, \
-		litlen_lengths, data->hlit))
-		return (false);
-	if (!read_dynamic_code_lengths(data, &data->clen_hufftable, \
-		dist_lengths, data->hdist))
+		all_lengths, data->hlit + data->hdist))
 		return (false);
 	*litlen = huffman_new_table(data->hlit);
 	if (!*litlen)
@@ -61,20 +59,23 @@ static bool	create_dynamic_tables(t_inflate_dynamic_data *data, \
 		huffman_free_table(*litlen);
 		return (false);
 	}
-	assign_huffman_codes((*litlen)->codes, litlen_lengths, data->hlit);
-	assign_huffman_codes((*dist)->codes, dist_lengths, data->hdist);
+	assign_huffman_codes((*litlen)->codes, all_lengths, data->hlit);
+	assign_huffman_codes((*dist)->codes, all_lengths + data->hlit, data->hdist);
 	return (true);
 }
 
 static bool	read_dynamic_hlengths(t_inflate_dynamic_data *data)
 {
-	if (!bs_sread_8bits(&data->context->bit_stream, 5, &data->hlit))
+	uint8_t	temp;
+
+	temp = 0;
+	if (!bs_sread_8bits(&data->context->bit_stream, 5, &temp))
 		return (false);
 	if (!bs_sread_8bits(&data->context->bit_stream, 5, &data->hdist))
 		return (false);
 	if (!bs_sread_8bits(&data->context->bit_stream, 4, &data->hclen))
 		return (false);
-	data->hlit += 257;
+	data->hlit = 257 + temp;
 	data->hdist += 1;
 	data->hclen += 4;
 	return (true);

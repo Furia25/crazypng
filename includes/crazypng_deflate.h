@@ -6,7 +6,7 @@
 /*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 14:45:54 by vdurand           #+#    #+#             */
-/*   Updated: 2025/05/04 19:45:15 by val              ###   ########.fr       */
+/*   Updated: 2025/05/05 00:54:44 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ typedef struct s_inflate_dynamic_data
 	uint16_t			temp_i;
 	uint16_t			temp_size;
 	uint8_t				temp_last;
-	uint8_t				hlit;
+	size_t				hlit;
 	uint8_t				hdist;
 	uint8_t				hclen;
 	int					clen_tab[DEFLATE_CLEN_SIZE];

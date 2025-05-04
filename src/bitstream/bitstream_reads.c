@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   bitstream_read.c                                   :+:      :+:    :+:   */
+/*   bitstream_reads.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 14:51:29 by val               #+#    #+#             */
-/*   Updated: 2025/05/03 15:23:40 by val              ###   ########.fr       */
+/*   Updated: 2025/05/05 00:34:24 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ bool	bs_read_nbytes(t_bitstream *bs, t_cp_buffer *buffer, size_t len)
 		bs->overflowed = true;
 		return (false);
 	}
-	if (!cp_buffer_add(buffer, &bs->data[bs->byte_pos], len * 8))
+	if (!cp_buffer_add(buffer, &bs->data[bs->byte_pos], len))
 		return (false);
 	bs->byte_pos += len;
 	bs->bit_pos = 0;
@@ -30,7 +30,7 @@ bool	bs_read_nbytes(t_bitstream *bs, t_cp_buffer *buffer, size_t len)
 
 bool	bs_sread_64bits(t_bitstream *bs, int count, uint64_t *value)
 {
-	*value = (uint32_t) bs_read_bits(bs, count);
+	*value = bs_read_bits(bs, count);
 	return (!bs->overflowed);
 }
 

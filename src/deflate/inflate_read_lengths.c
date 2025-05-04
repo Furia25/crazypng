@@ -6,7 +6,7 @@
 /*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 19:06:11 by val               #+#    #+#             */
-/*   Updated: 2025/05/04 22:42:53 by val              ###   ########.fr       */
+/*   Updated: 2025/05/05 00:49:04 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ bool	read_dynamic_code_lengths(t_inflate_dynamic_data *data, \
 {
 	data->temp_i = 0;
 	data->temp_size = total_codes;
-	data->temp_last = 16;
+	data->temp_last = 0;
 	while (data->temp_i < total_codes)
 	{
 		if (!decode_lengths(data, clen_huff, code_lengths))
@@ -38,9 +38,6 @@ static bool	decode_lengths(t_inflate_dynamic_data *data, \
 	int	symbol;
 
 	symbol = huffman_decode(&data->context->bit_stream, clen_huff);
-	ft_putstr_fd("Symbol : ", 2);
-	ft_putnbr_fd(symbol, 2);
-	ft_putstr_fd("\n", 2);
 	if (symbol < 0 || symbol > 18)
 		return (false);
 	if (symbol <= 15)
