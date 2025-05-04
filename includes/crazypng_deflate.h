@@ -6,7 +6,7 @@
 /*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 14:45:54 by vdurand           #+#    #+#             */
-/*   Updated: 2025/05/05 00:54:44 by val              ###   ########.fr       */
+/*   Updated: 2025/05/05 01:15:30 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ typedef struct s_inflate_context
 }	t_inflate_context;
 
 # define DEFLATE_CLEN_SIZE	19
-# define DEFLATE_CLEN_MAXBITS	8
+# define DEFLATE_CLEN_MAXBITS	7
 # define DEFLATE_MAXBITS	15
 
 typedef struct s_inflate_dynamic_data

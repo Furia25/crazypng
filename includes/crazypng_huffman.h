@@ -6,7 +6,7 @@
 /*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 20:04:07 by val               #+#    #+#             */
-/*   Updated: 2025/05/04 19:45:00 by val              ###   ########.fr       */
+/*   Updated: 2025/05/05 01:06:51 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include "crazypng_bitstream.h"
 
 # define DEFLATE_LL_TABLE_SIZE	288
-# define DEFLATE_D_TABLE_SIZE	30
+# define DEFLATE_D_TABLE_SIZE	32
 
 typedef struct s_huffman_code
 {

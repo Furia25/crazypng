@@ -6,7 +6,7 @@
 /*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 19:06:11 by val               #+#    #+#             */
-/*   Updated: 2025/05/05 00:49:04 by val              ###   ########.fr       */
+/*   Updated: 2025/05/05 01:21:57 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,10 @@ static bool fill_repeat_last(t_inflate_dynamic_data *data, \
 {
     uint16_t extra;
 
-	if (extra_bits == 2 && data->temp_last == 0)
-    	return (false);
 	extra = 0;
     if (!bs_sread_16bits(&data->context->bit_stream, extra_bits, &extra))
         return (false);
     extra += base;
-
     if (data->temp_i + extra > data->temp_size)
     {
         ft_putstr_fd("Error: Code lengths exceed buffer size. Attempted to write ", 2);

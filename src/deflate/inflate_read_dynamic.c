@@ -6,7 +6,7 @@
 /*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 14:53:34 by val               #+#    #+#             */
-/*   Updated: 2025/05/05 00:56:00 by val              ###   ########.fr       */
+/*   Updated: 2025/05/05 01:03:29 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static bool	create_dynamic_tables(t_inflate_dynamic_data *data, \
 	t_huffman_table **litlen,
 	t_huffman_table **dist)
 {
-	int		all_lengths[DEFLATE_LL_TABLE_SIZE + DEFLATE_D_TABLE_SIZE];
+	int		all_lengths[DEFLATE_LL_TABLE_SIZE + DEFLATE_D_TABLE_SIZE + 1];
 
 	ft_memset(all_lengths, 0, (DEFLATE_LL_TABLE_SIZE + DEFLATE_D_TABLE_SIZE) \
 		* sizeof(int));
