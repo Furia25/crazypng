@@ -9,7 +9,6 @@
 * 🔍 **Parsing** complet des chunks PNG : IHDR, PLTE, IDAT, IEND, etc.
 * 🎨 **Support couleur** : grayscale, RGB, palette, grayscale+alpha, RGBA
 * ⚙️ **Décompression DEFLATE** (LZ77 + Huffman) conforme au RFC-1951
-* 🔄 **Fenêtre LZ77** de 32 768 octets pour une reconstruction optimale
 * 🏗️ **Flux bit-à-bit** et gestion de buffers personnalisés
 * 📚 **Libft** intégrée pour les utilitaires (chaînes, mémoire, listes…)
 
