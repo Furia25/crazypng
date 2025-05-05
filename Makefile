@@ -6,7 +6,7 @@
 #    By: val <val@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/13 23:20:17 by val               #+#    #+#              #
-#    Updated: 2025/05/04 19:42:35 by val              ###   ########.fr        #
+#    Updated: 2025/05/05 16:19:53 by val              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,7 +67,9 @@ endif
 
 
 SRC_FILES = \
-	utils/utils.c \
+	utils/file.c \
+	utils/file_fread.c \
+	utils/swaps.c \
 	utils/buffer_utils.c \
 	bitstream/bitstream_utils.c \
 	bitstream/bitstream_reads.c \
@@ -98,7 +100,7 @@ DEP = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.d, $(SRC))
 LIBFT_DIR = libft
 MLX_DIR = minilibx
 
-CC = cc -g3
+CC = cc -g3 -Ofast
 OPTIFLAGS = 
 CFLAGS = $(OPTIFLAGS) -Werror -Wextra -Wall
 MLXFLAGS = -L$(MLX_DIR) -lmlx

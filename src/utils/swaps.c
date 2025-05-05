@@ -1,0 +1,39 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   swaps.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/05 16:18:45 by val               #+#    #+#             */
+/*   Updated: 2025/05/05 16:19:10 by val              ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "crazypng_utils.h"
+
+uint32_t	swap_endian32(uint32_t value)
+{
+	return (((value >> 24) & 0xFF) | ((value >> 8) & 0xFF00) | \
+		((value << 8) & 0xFF0000) | ((value << 24) & 0xFF000000));
+}
+
+uint16_t	swap_endian16(uint16_t value)
+{
+	return ((value >> 8) | (value << 8));
+}
+
+uint32_t	reverse_32bits(uint32_t code, int len)
+{
+	uint32_t	reversed;
+	int			i;
+
+	i = 0;
+	reversed = 0;
+	while (i < len)
+	{
+		reversed = (reversed << 1) | (code & 1);
+		code >>= 1;
+	}
+	return (reversed);
+}

@@ -6,7 +6,7 @@
 /*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 15:15:41 by vdurand           #+#    #+#             */
-/*   Updated: 2025/05/05 03:05:56 by val              ###   ########.fr       */
+/*   Updated: 2025/05/05 16:11:57 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ static bool	png_chunk_end(t_png *png, t_png_chunk *chunk, bool idat, int plte)
 		return (false);
 	if (!png_decompress(png))
 		return (false);
+	cp_buffer_reset(&png->compressed_data);
 	return (true);
 }
 

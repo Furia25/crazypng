@@ -6,7 +6,7 @@
 /*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 21:43:32 by val               #+#    #+#             */
-/*   Updated: 2025/05/05 02:38:35 by val              ###   ########.fr       */
+/*   Updated: 2025/05/05 16:14:09 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,25 @@
 
 int	huffman_decode(t_bitstream *stream, t_huffman_table *tab)
 {
-	uint32_t	buf = bs_peek_bits(stream, tab->max_bits);
+	uint32_t	buf;
+	uint8_t		len;
+	uint32_t	code;
+	size_t		i;
 
-	for (size_t i = 0; i < tab->count; i++)
+	i = 0;
+	buf = bs_peek_bits(stream, tab->max_bits);
+	while (i < tab->count)
 	{
 		if (tab->codes[i].bits == 0)
 			continue;
-		uint8_t len = tab->codes[i].bits;
-		uint32_t code = buf & ((1 << len) - 1);
+		len = tab->codes[i].bits;
+		code = buf & ((1 << len) - 1);
 		if (code == tab->codes[i].code)
 		{
 			if (!bs_consume_bits(stream, len))
-				return -1;
+				return -(2);
 			return i;
 		}
 	}
-	return -1;
+	return (-1);
 }

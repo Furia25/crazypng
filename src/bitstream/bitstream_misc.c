@@ -6,7 +6,7 @@
 /*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 21:53:59 by val               #+#    #+#             */
-/*   Updated: 2025/05/03 22:21:28 by val              ###   ########.fr       */
+/*   Updated: 2025/05/05 16:15:15 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 uint64_t	bs_peek_bits(t_bitstream *bs, int count)
 {
-    uint64_t	result;
-    int			i;
-    size_t		temp_byte_pos;
-    int			temp_bit_pos;
+	uint64_t	n;
+	int			i;
+	size_t		temp_byte_pos;
+	int			temp_bit_pos;
 
 	if (count <= 0 || count > 64 || bs->overflowed)
 		return (0);
-	result = 0;
+	n = 0;
 	i = 0;
 	temp_byte_pos = bs->byte_pos;
 	temp_bit_pos = bs->bit_pos;
@@ -29,7 +29,7 @@ uint64_t	bs_peek_bits(t_bitstream *bs, int count)
 	{
 		if (temp_byte_pos >= bs->size)
 			return (0);
-		result |= (uint64_t)((bs->data[temp_byte_pos] >> temp_bit_pos) & 1) << i;
+		n |= (uint64_t)((bs->data[temp_byte_pos] >> temp_bit_pos) & 1) << i;
 		temp_bit_pos++;
 		if (temp_bit_pos == 8)
 		{
@@ -38,7 +38,7 @@ uint64_t	bs_peek_bits(t_bitstream *bs, int count)
 		}
 		i++;
 	}
-	return (result);
+	return (n);
 }
 
 bool	bs_consume_bits(t_bitstream *stream, size_t n)
