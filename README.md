@@ -1,6 +1,6 @@
 # 🚀 CrazyPNG
 
-**CrazyPNG** est un décompresseur PNG ultra-léger, écrit en **C**, sans aucune dépendance externe. Parfait pour comprendre le format PNG et expérimenter l’algorithme DEFLATE tout en gardant le contrôle total sur le code !
+**CrazyPNG** est un décompresseur PNG léger, écrit en **C**, sans aucune dépendance externe. Parfait pour comprendre le format PNG et expérimenter l’algorithme DEFLATE tout en gardant le contrôle total sur le code !
 
 ---
 
@@ -45,7 +45,7 @@ Le programme analyse le fichier, décompresse les données IDAT et restitue les 
 
 ```
 CrazyPNG/
-├── _assets/_           # Logos et ressources graphiques
+├── test_files/         # Ressources graphiques pour les tests
 ├── includes/           # En-têtes (bitstream, deflate, huffman, png, utils)
 ├── libft/              # Bibliothèque utilitaire personnelle
 ├── src/                # Code source principal
