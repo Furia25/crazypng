@@ -1,31 +1,27 @@
-🚀 CrazyPNG
+# 🚀 CrazyPNG
 
-CrazyPNG est un décompresseur PNG ultra-léger, écrit en C, sans aucune dépendance externe. Parfait pour comprendre le format PNG et expérimenter l’algorithme DEFLATE tout en gardant le contrôle total sur le code !
+**CrazyPNG** est un décompresseur PNG ultra-léger, écrit en **C**, sans aucune dépendance externe. Parfait pour comprendre le format PNG et expérimenter l’algorithme DEFLATE tout en gardant le contrôle total sur le code !
 
-✨ Fonctionnalités
+---
 
-🔍 Parsing complet des chunks PNG : IHDR, PLTE, IDAT, IEND, etc.
+## ✨ Fonctionnalités
 
-🎨 Support couleur : grayscale, RGB, palette, grayscale+alpha, RGBA
+* 🔍 **Parsing** complet des chunks PNG : IHDR, PLTE, IDAT, IEND, etc.
+* 🎨 **Support couleur** : grayscale, RGB, palette, grayscale+alpha, RGBA
+* ⚙️ **Décompression DEFLATE** (LZ77 + Huffman) conforme au RFC-1951
+* 🔄 **Fenêtre LZ77** de 32 768 octets pour une reconstruction optimale
+* 🏗️ **Flux bit-à-bit** et gestion de buffers personnalisés
+* 📚 **Libft** intégrée pour les utilitaires (chaînes, mémoire, listes…)
 
-⚙️ Décompression DEFLATE (LZ77 + Huffman) conforme au RFC-1951
+## 🛠️ Prérequis
 
-🔄 Fenêtre LZ77 de 32 768 octets pour une reconstruction optimale
+* **Compilateur C** (GCC, Clang…)
+* **Make**
+* **Linux** ou **macOS**
 
-🏗️ Flux bit-à-bit et gestion de buffers personnalisés
+## 🚀 Installation rapide
 
-📚 Libft intégrée pour les utilitaires (chaînes, mémoire, listes…)
-
-🛠️ Prérequis
-
-Compilateur C (GCC, Clang…)
-
-Make
-
-Linux ou macOS
-
-🚀 Installation rapide
-
+```bash
 # 1. Cloner le dépôt
 git clone https://github.com/votre-utilisateur/crazypng.git
 cd crazypng
@@ -35,22 +31,27 @@ cd libft && make && cd ..
 
 # 3. Compiler le projet
 make
+```
 
-🎯 Utilisation
+## 🎯 Utilisation
 
+```bash
 # Décompresse un PNG
 ./crazypng path/to/image.png
+```
 
 Le programme analyse le fichier, décompresse les données IDAT et restitue les pixels dans un buffer interne : idéal pour vos tests ou pipelines de traitement d’images.
 
-📂 Structure du dépôt
+## 📂 Structure du dépôt
 
+```
 CrazyPNG/
+├── _assets/_           # Logos et ressources graphiques
 ├── includes/           # En-têtes (bitstream, deflate, huffman, png, utils)
 ├── libft/              # Bibliothèque utilitaire personnelle
 ├── src/                # Code source principal
 │   ├── bitstream/      # Lecture bit-à-bit
-│   ├── deflate/        # Inflate + LZ77
+│   ├── deflate/        # LZ77 + Huffman
 │   ├── huffman/        # Tables et décodage
 │   ├── png/            # Parsing et orchestration
 │   └── utils/          # Helpers (buffers, fichiers)
@@ -58,7 +59,10 @@ CrazyPNG/
 ├── Makefile            # Règles de compilation
 ├── deflate_doc.txt     # Documentation DEFLATE
 └── to_do               # Prochaines améliorations
+```
 
-📜 Licence
+## 📜 Licence
 
-Distribué sous la licence MIT. Consulte le fichier LICENSE pour plus de détails.
+Distribué sous la licence **MIT**. Consulte le fichier [LICENSE](LICENSE) pour plus de détails.
+
+---
