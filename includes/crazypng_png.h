@@ -34,6 +34,16 @@
 # define PNG_CHUNK_TYPE_CHAR_PLTE "PLTE"
 # define PNG_CHUNK_TYPE_CHAR_GAMA "gAMA"
 
+typedef struct s_png_unfilter_context
+{
+	size_t	y;
+	size_t	lines_bytes;
+	uint8_t	channels_number;
+	uint8_t	bits_pp;
+	uint8_t	*prev_line;
+	uint8_t	*current_line;
+}	t_png_unfilter_context;
+
 typedef enum e_png_chunk_type
 {
 	PNG_CHUNK_IHDR = 0,
@@ -49,7 +59,7 @@ typedef enum e_png_color_type
 	PNG_COLOR_GRAYSCALE			= 0,
 	PNG_COLOR_RGB				= 2,
 	PNG_COLOR_PALETTE			= 3,
-	PNG_COLOR_ALPHA_GRAYSCALE	= 4,
+	PNG_COLOR_GRAYSCALE_ALPHA	= 4,
 	PNG_COLOR_RGBA				= 6
 }	t_png_color_type;
 
@@ -85,30 +95,36 @@ typedef struct s_png_chunk
 	uint32_t			checksum;
 }	t_png_chunk;
 
+typedef struct s_png_pixel8
+{
+	uint8_t	r;
+	uint8_t	g;
+	uint8_t	b;
+	uint8_t	a;
+}	t_png_pixel8;
+
 typedef struct s_png
 {
 	t_cp_file				*file;
 	t_png_chunk_data_IHDR	header;
 	t_cp_buffer				compressed_data;
 	t_cp_buffer				data;
-	union
-	{
-		uint8_t		*pixels_8bit;
-		uint16_t	*pixels_16bit;
-	};
-	uint32_t				*palette;
+	t_png_pixel8			*pixels_8bit;
+	t_png_pixel8			*palette;
 	uint32_t				palette_size;
 	bool					convert_endian;
+	bool					animated;
 }	t_png;
 
-bool				chunk_is_critical(t_png_chunk_type type);
 bool				chunk_precede_idat(t_png_chunk_type type);
 bool				chunk_precede_plte(t_png_chunk_type type);
+uint8_t				channels_from_color(t_png_color_type type);
 
 bool				chunk_parse_ihdr(t_png *png, t_png_chunk *chunk);
 
 t_png_chunk_type	png_chunk_get_type(t_png_chunk *chunk);
 bool				png_chunk_read(t_png *png, t_png_chunk *chunk);
+
 t_png				*png_open(char *file_name);
 void				png_close(t_png *png);
 bool				png_parse(t_png *png);

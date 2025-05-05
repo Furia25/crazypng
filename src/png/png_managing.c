@@ -6,7 +6,7 @@
 /*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 11:48:38 by vdurand           #+#    #+#             */
-/*   Updated: 2025/05/05 03:05:53 by val              ###   ########.fr       */
+/*   Updated: 2025/05/06 00:45:30 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,22 @@
 #include <errno.h>
 
 static bool	verify_png_signature(t_cp_file *file);
+static bool	assign_basics(t_png *png, char *file_name);
 
 t_png	*png_open(char *file_name)
 {
 	t_png		*png;
-	t_cp_file	*file;
 
 	png = ft_calloc(1, sizeof(t_png));
 	if (!png)
 		return (NULL);
-	file = cp_open(file_name, O_RDONLY);
-	if (!file)
-	{
-		free(png);
-		return (NULL);
-	}
-	png->file = file;
-	if (!verify_png_signature(file))
+	if (assign_basics(png, file_name))
 	{
 		png_close(png);
 		return (NULL);
 	}
 	png->convert_endian = ft_isbigendian();
-	if (!png_parse(png))
+	if (!verify_png_signature(png->file) || !png_parse(png))
 	{
 		png_close(png);
 		return (NULL);
@@ -50,8 +43,25 @@ void	png_close(t_png *png)
 		return ;
 	cp_buffer_reset(&png->compressed_data);
 	cp_buffer_reset(&png->data);
+	free(png->palette);
+	free(png->pixels_8bit);
 	cp_close(png->file);
 	free(png);
+}
+
+static bool	assign_basics(t_png *png, char *file_name)
+{
+	t_cp_file	*file;
+
+	file = cp_open(file_name, O_RDONLY);
+	if (!file)
+		return (false);
+	png->file = file;
+	png->pixels_8bit = ft_calloc(png->header.width * png->header.height, \
+		sizeof(t_png_pixel8));
+	if (!png->pixels_8bit)
+		return (false);
+	return (true);
 }
 
 static bool	verify_png_signature(t_cp_file *file)

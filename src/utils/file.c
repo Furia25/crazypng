@@ -6,7 +6,7 @@
 /*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 16:17:30 by val               #+#    #+#             */
-/*   Updated: 2025/05/05 16:18:26 by val              ###   ########.fr       */
+/*   Updated: 2025/05/06 00:44:00 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,9 @@ t_cp_file	*cp_open(char *name, int flags)
 
 void	cp_close(t_cp_file *file)
 {
-	if (file)
-	{
-		if (file->fd != -1)
-			close(file->fd);
-		free(file);
-	}
+	if (!file)
+		return ;
+	if (file->fd != -1)
+		close(file->fd);
+	free(file);
 }
