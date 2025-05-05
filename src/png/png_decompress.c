@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   png_decompress.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vdurand <vdurand@student.42.fr>            +#+  +:+       +#+        */
+/*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 16:22:45 by vdurand           #+#    #+#             */
-/*   Updated: 2025/05/02 17:31:31 by vdurand          ###   ########.fr       */
+/*   Updated: 2025/05/05 03:05:51 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ bool	png_decompress(t_png *png)
 {
 	if (png->data.data)
 	{
-		if (png->uncompressed_data.data)
-			cp_buffer_reset(&png->uncompressed_data);
+		if (png->compressed_data.data)
+			cp_buffer_reset(&png->compressed_data);
 		return (true);
 	}
-	if (!png->uncompressed_data.data)
+	if (!png->compressed_data.data)
 		return (false);
 	return (png_inflate(png));
 }
@@ -31,7 +31,7 @@ bool	png_decompress(t_png *png)
 static bool	png_inflate(t_png *png)
 {
 	if (!cp_inflate(&png->data, \
-		png->uncompressed_data.data, png->uncompressed_data.size))
+		png->compressed_data.data, png->compressed_data.size))
 		return (false);
 	return (true);
 }

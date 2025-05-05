@@ -89,7 +89,7 @@ typedef struct s_png
 {
 	t_cp_file				*file;
 	t_png_chunk_data_IHDR	header;
-	t_cp_buffer				uncompressed_data;
+	t_cp_buffer				compressed_data;
 	t_cp_buffer				data;
 	union
 	{

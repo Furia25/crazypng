@@ -6,7 +6,7 @@
 /*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 15:15:41 by vdurand           #+#    #+#             */
-/*   Updated: 2025/05/05 01:53:16 by val              ###   ########.fr       */
+/*   Updated: 2025/05/05 03:05:56 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ bool	png_parse(t_png *png)
 
 static bool	chunk_parse_idat(t_png *png, t_png_chunk *chunk, bool *encountered)
 {
-	if (!cp_buffer_add(&png->uncompressed_data, chunk->data, \
+	if (!cp_buffer_add(&png->compressed_data, chunk->data, \
 		chunk->header.length))
 		return (false);
 	*encountered = true;

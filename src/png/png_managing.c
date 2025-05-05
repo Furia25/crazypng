@@ -6,7 +6,7 @@
 /*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 11:48:38 by vdurand           #+#    #+#             */
-/*   Updated: 2025/05/05 01:51:18 by val              ###   ########.fr       */
+/*   Updated: 2025/05/05 03:05:53 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	png_close(t_png *png)
 {
 	if (!png)
 		return ;
-	cp_buffer_reset(&png->uncompressed_data);
+	cp_buffer_reset(&png->compressed_data);
 	cp_buffer_reset(&png->data);
 	cp_close(png->file);
 	free(png);
