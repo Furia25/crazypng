@@ -6,7 +6,7 @@
 /*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 21:43:32 by val               #+#    #+#             */
-/*   Updated: 2025/05/04 23:06:40 by val              ###   ########.fr       */
+/*   Updated: 2025/05/05 02:38:35 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	huffman_decode(t_bitstream *stream, t_huffman_table *tab)
 		if (tab->codes[i].bits == 0)
 			continue;
 		uint8_t len = tab->codes[i].bits;
-		uint32_t code = (buf >> (tab->max_bits - len)) & ((1 << len) - 1);
+		uint32_t code = buf & ((1 << len) - 1);
 		if (code == tab->codes[i].code)
 		{
 			if (!bs_consume_bits(stream, len))

@@ -6,7 +6,7 @@
 /*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 17:46:04 by val               #+#    #+#             */
-/*   Updated: 2025/05/04 20:27:23 by val              ###   ########.fr       */
+/*   Updated: 2025/05/05 02:33:48 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	assign_huffman_codes(t_huffman_code *codes, \
 		len = code_lengths[i];
 		if (len != 0)
 		{
-			codes[i].code = next_code[len];
+			codes[i].code = reverse_32bits(next_code[len], len);
 			codes[i].bits = len;
 			next_code[len]++;
 		}

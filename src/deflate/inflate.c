@@ -6,7 +6,7 @@
 /*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 16:37:16 by vdurand           #+#    #+#             */
-/*   Updated: 2025/05/05 01:51:47 by val              ###   ########.fr       */
+/*   Updated: 2025/05/05 02:41:59 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ static bool	inflate_read_blocks(t_inflate_context *context)
 		if (!handle_block_decompression(context, btype))
 			return (false);
 	}
+	ft_putstr_fd("GROS ZIZI POILU", 2);
 	return (true);
 }
 
@@ -89,6 +90,7 @@ static bool	handle_block_decompression(t_inflate_context *context, \
 	t_huffman_table	*dynamic_dist;
 	bool			dynamic_result;
 
+	ft_putstr_fd("APPLE PAY\n", 2);
 	if (btype == 0)
 	{
 		return (inflate_block_uncompressed(context));

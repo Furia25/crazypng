@@ -6,7 +6,7 @@
 /*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 23:55:54 by val               #+#    #+#             */
-/*   Updated: 2025/05/04 22:38:44 by val              ###   ########.fr       */
+/*   Updated: 2025/05/05 02:14:21 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ uint64_t	reverse_64bits(uint64_t x, int bits)
 	return x >> (64 - bits);
 }
 
-uint32_t	reverse_bits32(uint32_t code, int len)
+uint32_t	reverse_32bits(uint32_t code, int len)
 {
 	uint32_t reversed = 0;
 	for (int i = 0; i < len; i++) {

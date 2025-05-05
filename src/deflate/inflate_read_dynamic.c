@@ -6,7 +6,7 @@
 /*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 14:53:34 by val               #+#    #+#             */
-/*   Updated: 2025/05/05 01:03:29 by val              ###   ########.fr       */
+/*   Updated: 2025/05/05 02:54:32 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,7 @@ bool	inflate_get_dynamic(t_inflate_context *context,
 	data.clen_hufftable.codes = clen_codes;
 	data.clen_hufftable.count = DEFLATE_CLEN_SIZE;
 	data.clen_hufftable.max_bits = DEFLATE_CLEN_MAXBITS;
-	if (!create_dynamic_tables(&data, litlen, dist))
-		return (false);
-	return (true);
+	return (create_dynamic_tables(&data, litlen, dist));
 }
 
 static bool	create_dynamic_tables(t_inflate_dynamic_data *data, \
@@ -61,6 +59,8 @@ static bool	create_dynamic_tables(t_inflate_dynamic_data *data, \
 	}
 	assign_huffman_codes((*litlen)->codes, all_lengths, data->hlit);
 	assign_huffman_codes((*dist)->codes, all_lengths + data->hlit, data->hdist);
+	(*litlen)->max_bits = DEFLATE_MAXBITS;
+	(*dist)->max_bits = DEFLATE_MAXBITS;
 	return (true);
 }
 
