@@ -6,7 +6,7 @@
 /*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 23:32:53 by val               #+#    #+#             */
-/*   Updated: 2025/05/05 01:44:35 by val              ###   ########.fr       */
+/*   Updated: 2025/05/05 02:00:14 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,5 +17,5 @@ int	ft_isbigendian(void)
 	const uint32_t		x = 1;
 	const unsigned char	*c = (const unsigned char*) &x;
 
-	return (!((int)(*c)));
+	return (((int)(*c)));
 }
