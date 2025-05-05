@@ -6,15 +6,15 @@
 /*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 01:25:09 by val               #+#    #+#             */
-/*   Updated: 2025/05/05 02:42:25 by val              ###   ########.fr       */
+/*   Updated: 2025/05/05 16:53:47 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "crazypng_deflate.h"
 
 static bool	length_from_symbol(int symbol, int *length, t_bitstream *stream);
-static bool	distance_from_symbol(int symbol, int *distance, t_bitstream *stream);
-static bool handle_symbols(t_inflate_context *context, \
+static bool	distance_from_symbol(int symbol, int *dist, t_bitstream *stream);
+static bool	handle_symbols(t_inflate_context *context, \
 	t_bitstream *stream, int symbol, t_huffman_table *dist_table);
 
 bool	inflate_block_huffman(t_inflate_context *context, \
@@ -39,8 +39,8 @@ bool	inflate_block_huffman(t_inflate_context *context, \
 	return (false);
 }
 
-static bool handle_symbols(t_inflate_context *context, \
-	 t_bitstream *stream, int symbol, t_huffman_table *dist_table)
+static bool	handle_symbols(t_inflate_context *context, \
+	t_bitstream *stream, int symbol, t_huffman_table *dist_table)
 {
 	int			distance_symbol;
 	int			length;
@@ -80,7 +80,7 @@ static bool	length_from_symbol(int symbol, int *length, t_bitstream *stream)
 	return (true);
 }
 
-static bool	distance_from_symbol(int symbol, int *distance, t_bitstream *stream)
+static bool	distance_from_symbol(int symbol, int *dist, t_bitstream *stream)
 {
 	t_code_info	info;
 	uint16_t	temp;
@@ -89,9 +89,9 @@ static bool	distance_from_symbol(int symbol, int *distance, t_bitstream *stream)
 		return (false);
 	temp = 0;
 	info = g_deflate_distance_table[symbol];
-	*distance = info.base;
+	*dist = info.base;
 	if (!bs_sread_16bits(stream, info.extra_bits, &temp))
 		return (false);
-	*distance += temp;
+	*dist += temp;
 	return (true);
 }

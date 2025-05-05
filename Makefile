@@ -6,7 +6,7 @@
 #    By: val <val@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/13 23:20:17 by val               #+#    #+#              #
-#    Updated: 2025/05/05 16:19:53 by val              ###   ########.fr        #
+#    Updated: 2025/05/05 16:54:02 by val              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -83,7 +83,6 @@ SRC_FILES = \
 	png/png_decompress.c \
 	deflate/inflate.c \
 	deflate/lz77.c \
-	deflate/deflate_utils.c \
 	deflate/inflate_decode.c \
 	deflate/inflate_decode_huffman.c \
 	deflate/inflate_huffman_assign.c \

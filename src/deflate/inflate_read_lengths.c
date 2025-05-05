@@ -6,7 +6,7 @@
 /*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 19:06:11 by val               #+#    #+#             */
-/*   Updated: 2025/05/05 02:39:28 by val              ###   ########.fr       */
+/*   Updated: 2025/05/05 16:52:35 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static bool	decode_lengths(t_inflate_dynamic_data *data, \
 	t_huffman_table *clen_huff, int *code_lengths);
-static bool fill_repeat_last(t_inflate_dynamic_data *data, \
+static bool	fill_repeat_last(t_inflate_dynamic_data *data, \
 	int *code_lengths, uint8_t extra_bits, uint8_t base);
 
 bool	read_dynamic_code_lengths(t_inflate_dynamic_data *data, \
@@ -39,13 +39,9 @@ static bool	decode_lengths(t_inflate_dynamic_data *data, \
 
 	symbol = huffman_decode(&data->context->bit_stream, clen_huff);
 	if (symbol < 0 || symbol > 18)
-	{
 		return (false);
-	}
-		
 	if (symbol <= 15)
 	{
-		
 		code_lengths[data->temp_i] = symbol;
 		data->temp_last = symbol;
 		data->temp_i++;
@@ -64,31 +60,32 @@ static bool	decode_lengths(t_inflate_dynamic_data *data, \
 	return (false);
 }
 
-static bool fill_repeat_last(t_inflate_dynamic_data *data, \
-    int *code_lengths, uint8_t extra_bits, uint8_t base)
+static bool	fill_repeat_last(t_inflate_dynamic_data *data, \
+	int *code_lengths, uint8_t extra_bits, uint8_t base)
 {
-    uint16_t extra;
+	uint16_t	extra;
 
 	extra = 0;
-    if (!bs_sread_16bits(&data->context->bit_stream, extra_bits, &extra))
-        return (false);
-    extra += base;
-    if (data->temp_i + extra > data->temp_size)
-    {
-        ft_putstr_fd("Error: Code lengths exceed buffer size. Attempted to write ", 2);
-        ft_putnbr_fd(extra, 2);
-        ft_putstr_fd(" entries at index ", 2);
-        ft_putnbr_fd(data->temp_i, 2);
+	if (!bs_sread_16bits(&data->context->bit_stream, extra_bits, &extra))
+		return (false);
+	extra += base;
+	if (data->temp_i + extra > data->temp_size)
+	{
+		ft_putstr_fd("Error: Code lengths exceed buffer size. \
+			Attempted to write ", 2);
+		ft_putnbr_fd(extra, 2);
+		ft_putstr_fd(" entries at index ", 2);
+		ft_putnbr_fd(data->temp_i, 2);
 		ft_putstr_fd(" / ", 2);
 		ft_putnbr_fd(data->temp_size, 2);
-        ft_putstr_fd("\n", 2);
-        return (false);
-    }
-    while (extra)
-    {
-        code_lengths[data->temp_i] = data->temp_last;
-        data->temp_i++;
-        extra--;
-    }
-    return (true);
+		ft_putstr_fd("\n", 2);
+		return (false);
+	}
+	while (extra)
+	{
+		code_lengths[data->temp_i] = data->temp_last;
+		data->temp_i++;
+		extra--;
+	}
+	return (true);
 }

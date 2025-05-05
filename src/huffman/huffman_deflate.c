@@ -6,7 +6,7 @@
 /*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 20:48:50 by val               #+#    #+#             */
-/*   Updated: 2025/05/05 01:39:44 by val              ###   ########.fr       */
+/*   Updated: 2025/05/05 16:54:48 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ t_huffman_table	*huffman_deflate_table(void)
 	table = huffman_new_table(DEFLATE_LL_TABLE_SIZE);
 	if (!table)
 		return (NULL);
-	table->max_bits = 9;	
+	table->max_bits = 9;
 	fill_literals(table->codes);
-	fill_lengths_and_eob(table->codes + 256);		
+	fill_lengths_and_eob(table->codes + 256);
 	return (table);
 }
 
@@ -49,8 +49,8 @@ static void	fill_literals(t_huffman_code *codes)
 static void	fill_lengths_and_eob(t_huffman_code *codes)
 {
 	size_t	i;
-	i = 0;
 
+	i = 0;
 	set_huffman_code(codes + i, 0, 7);
 	i++;
 	while (i < 24)

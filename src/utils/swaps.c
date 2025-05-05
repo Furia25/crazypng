@@ -6,7 +6,7 @@
 /*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 16:18:45 by val               #+#    #+#             */
-/*   Updated: 2025/05/05 16:19:10 by val              ###   ########.fr       */
+/*   Updated: 2025/05/05 16:48:38 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,15 @@ uint32_t	reverse_32bits(uint32_t code, int len)
 
 	i = 0;
 	reversed = 0;
+	if (len < 0)
+		len = 0;
+	if (len > 32)
+		len = 32;
 	while (i < len)
 	{
 		reversed = (reversed << 1) | (code & 1);
 		code >>= 1;
+		i++;
 	}
 	return (reversed);
 }

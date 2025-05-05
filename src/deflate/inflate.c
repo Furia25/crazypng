@@ -6,7 +6,7 @@
 /*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 16:37:16 by vdurand           #+#    #+#             */
-/*   Updated: 2025/05/05 15:49:01 by val              ###   ########.fr       */
+/*   Updated: 2025/05/05 16:51:16 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,15 +95,15 @@ static bool	handle_block_decompression(t_inflate_context *context, \
 	}
 	else if (btype == 1)
 	{
-		return (inflate_block_huffman(context, context->huffman_fixed,\
-			 context->distance_fixed));
+		return (inflate_block_huffman(context, context->huffman_fixed, \
+			context->distance_fixed));
 	}
 	else if (btype == 2)
 	{
 		if (!inflate_get_dynamic(context, &dynamic_linlen, &dynamic_dist))
 			return (false);
-		dynamic_result = inflate_block_huffman(context, dynamic_linlen,\
-			 dynamic_dist);
+		dynamic_result = inflate_block_huffman(context, dynamic_linlen, \
+			dynamic_dist);
 		huffman_free_table(dynamic_linlen);
 		huffman_free_table(dynamic_dist);
 		return (dynamic_result);

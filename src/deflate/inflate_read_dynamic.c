@@ -6,14 +6,14 @@
 /*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 14:53:34 by val               #+#    #+#             */
-/*   Updated: 2025/05/05 02:54:32 by val              ###   ########.fr       */
+/*   Updated: 2025/05/05 16:54:30 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "crazypng_deflate.h"
 
 static bool	create_dynamic_tables(t_inflate_dynamic_data *data, \
-	t_huffman_table **litlen,
+	t_huffman_table **litlen, \
 	t_huffman_table **dist);
 
 static bool	read_dynamic_hlengths(t_inflate_dynamic_data *data);
