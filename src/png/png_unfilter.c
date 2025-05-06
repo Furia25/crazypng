@@ -6,7 +6,7 @@
 /*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 23:49:35 by val               #+#    #+#             */
-/*   Updated: 2025/05/06 03:53:36 by val              ###   ########.fr       */
+/*   Updated: 2025/05/06 04:26:01 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 static bool	scanline_start(t_png_unfilter_context *context);
 static bool	scanline_apply_filters(t_png_unfilter_context *context, \
 	int filter_type);
-static void	unpack_scanline_to_pixels(t_png_unfilter_context *context);
 
 bool	png_unfilter(t_png *png)
 {
@@ -64,8 +63,9 @@ static bool	scanline_start(t_png_unfilter_context *context)
 		if (!scanline_apply_filters(context, filter_type))
 			return (false);
 		context->offset += context->lines_bytes;
-		unpack_scanline_to_pixels(context);
-		swap_ptr(&context->current_line, &context->prev_line);
+		if (!unpack_scanline_to_pixels(context, png))
+			return (false);
+		swap_bytes_ptr(&context->current_line, &context->prev_line);
 		context->y++;
 	}
 	return (true);
@@ -74,7 +74,6 @@ static bool	scanline_start(t_png_unfilter_context *context)
 static bool	scanline_apply_filters(t_png_unfilter_context *context, \
 	int filter_type)
 {
-	size_t	bpp;
 	uint8_t	*raw_line;
 
 	raw_line = context->png->data.data + context->offset;
@@ -90,63 +89,8 @@ static bool	scanline_apply_filters(t_png_unfilter_context *context, \
 		png_filter_paeth(context, raw_line);
 	else
 	{
-		ft_putchar_fd(PNG_ERROR_FILTERING_TYPE, 2);
+		ft_putstr_fd(PNG_ERROR_FILTERING_TYPE, 2);
 		return (false);
 	}
 	return (true);
-}
-
-static void	unpack_pixel(t_png_unfilter_context *context, t_png_pixel8 *out, \
-	size_t bitpos, size_t channel_n);
-
-static void	unpack_scanline_to_pixels(t_png_unfilter_context *context)
-{
-	t_png			*png;
-	size_t			x;
-	size_t			channel;
-	size_t			bit_pos;
-	t_png_pixel8	*out;
-
-	png = context->png;
-	out = png->pixels_8bit + png->header.width * context->y;
-	x = 0;
-	while (x < png->header.width)
-	{
-		bit_pos = x * context->channels_number * context->bit_depths;
-		channel = 0;
-		while (channel < context->channels_number)
-		{
-			unpack_pixel(context, out, bit_pos, channel);
-			bit_pos += context->bit_depths;
-			channel++;
-		}
-		if (png->header.color_type != PNG_COLOR_GRAYSCALE_ALPHA
-			&& png->header.color_type != PNG_COLOR_RGBA)
-			out->a = 255;
-		out++;
-		x++;
-	}
-}
-
-static void	unpack_pixel(t_png_unfilter_context *context, t_png_pixel8 *out, \
-	size_t bitpos, size_t channel_n)
-{
-	size_t		byte;
-	size_t		offset;
-	uint8_t		value;
-
-	byte = bitpos >> 3;
-	offset = bitpos & 7;
-	value = context->current_line[byte];
-	if (context->bit_depths < 8)
-		value = ((value >> (8 - context->bit_depths - \
-			offset)) & context->channel_max) * 255 / context->channel_max;
-	if (channel_n == 0)
-		out->r = value;
-	else if (channel_n == 1)
-		out->g = value;
-	else if (channel_n == 2)
-		out->b = value;
-	else
-		out->a = value;
 }

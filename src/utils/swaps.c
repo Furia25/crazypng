@@ -6,7 +6,7 @@
 /*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 16:18:45 by val               #+#    #+#             */
-/*   Updated: 2025/05/06 01:27:48 by val              ###   ########.fr       */
+/*   Updated: 2025/05/06 04:25:35 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ uint32_t	reverse_32bits(uint32_t code, int len)
 	return (reversed);
 }
 
-void	swap_ptr(void **ptr1, void **ptr2)
+void	swap_bytes_ptr(uint8_t **ptr1, uint8_t **ptr2)
 {
 	void	*temp;
 

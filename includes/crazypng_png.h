@@ -38,21 +38,6 @@
 # define PNG_CHUNK_TYPE_CHAR_PLTE "PLTE"
 # define PNG_CHUNK_TYPE_CHAR_GAMA "gAMA"
 
-typedef struct s_png_unfilter_context
-{
-	size_t		y;
-	size_t		lines_bytes;
-	size_t		offset;
-	size_t		bpp;
-	size_t		bits_pp;
-	uint8_t		bit_depths;
-	uint8_t		channels_number;
-	uint32_t	channel_max;
-	uint8_t		*prev_line;
-	uint8_t		*current_line;
-	t_png		*png;
-}	t_png_unfilter_context;
-
 typedef enum e_png_chunk_type
 {
 	PNG_CHUNK_IHDR = 0,
@@ -125,6 +110,21 @@ typedef struct s_png
 	bool					animated;
 }	t_png;
 
+typedef struct s_png_unfilter_context
+{
+	size_t		y;
+	size_t		lines_bytes;
+	size_t		offset;
+	size_t		bpp;
+	size_t		bits_pp;
+	uint8_t		bit_depths;
+	uint8_t		channels_number;
+	uint32_t	channel_max;
+	uint8_t		*prev_line;
+	uint8_t		*current_line;
+	t_png		*png;
+}	t_png_unfilter_context;
+
 bool				chunk_precede_idat(t_png_chunk_type type);
 bool				chunk_precede_plte(t_png_chunk_type type);
 uint8_t				channels_from_color(t_png_color_type type);
@@ -139,10 +139,17 @@ void				png_close(t_png *png);
 bool				png_parse(t_png *png);
 bool				png_decompress(t_png *png);
 
+bool				unpack_scanline_to_pixels(t_png_unfilter_context *context,
+						t_png *png);
+bool	png_unfilter(t_png *png);
 /*Filters*/
-void	png_filter_sub(t_png_unfilter_context *context, uint8_t *raw_line);
-void	png_filter_up(t_png_unfilter_context *context, uint8_t *raw_line);
-void	png_filter_average(t_png_unfilter_context *context, uint8_t *line);
-void	png_filter_paeth(t_png_unfilter_context *context, uint8_t *line);
+void				png_filter_sub(t_png_unfilter_context *context,
+						uint8_t *line);
+void				png_filter_up(t_png_unfilter_context *context,
+						uint8_t *line);
+void				png_filter_average(t_png_unfilter_context *context,
+						uint8_t *line);
+void				png_filter_paeth(t_png_unfilter_context *context,
+						uint8_t *line);
 
 #endif

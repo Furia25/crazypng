@@ -6,7 +6,7 @@
 /*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 01:25:09 by val               #+#    #+#             */
-/*   Updated: 2025/05/05 16:53:47 by val              ###   ########.fr       */
+/*   Updated: 2025/05/06 04:38:16 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ bool	inflate_block_huffman(t_inflate_context *context, \
 			return (false);
 		symbol = huffman_decode(stream, linlen);
 	}
-	ft_putstr_fd("BTYPE0\n", 2);
 	return (false);
 }
 

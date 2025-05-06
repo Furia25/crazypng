@@ -6,7 +6,7 @@
 /*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 11:48:38 by vdurand           #+#    #+#             */
-/*   Updated: 2025/05/06 00:45:30 by val              ###   ########.fr       */
+/*   Updated: 2025/05/06 04:31:22 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_png	*png_open(char *file_name)
 	png = ft_calloc(1, sizeof(t_png));
 	if (!png)
 		return (NULL);
-	if (assign_basics(png, file_name))
+	if (!assign_basics(png, file_name))
 	{
 		png_close(png);
 		return (NULL);
@@ -57,10 +57,6 @@ static bool	assign_basics(t_png *png, char *file_name)
 	if (!file)
 		return (false);
 	png->file = file;
-	png->pixels_8bit = ft_calloc(png->header.width * png->header.height, \
-		sizeof(t_png_pixel8));
-	if (!png->pixels_8bit)
-		return (false);
 	return (true);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   png_chunk_IHDR.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vdurand <vdurand@student.42.fr>            +#+  +:+       +#+        */
+/*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 01:16:56 by val               #+#    #+#             */
-/*   Updated: 2025/05/02 16:04:59 by vdurand          ###   ########.fr       */
+/*   Updated: 2025/05/06 04:31:32 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,10 @@ bool	chunk_parse_ihdr(t_png *png, t_png_chunk *chunk)
 		png->header.width = swap_endian32(png->header.width);
 		png->header.height = swap_endian32(png->header.height);
 	}
+	png->pixels_8bit = ft_calloc(png->header.width * png->header.height, \
+		sizeof(t_png_pixel8));
+	if (!png->pixels_8bit)
+		return (false);
 	return (true);
 }
 

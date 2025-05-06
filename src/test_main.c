@@ -6,7 +6,7 @@
 /*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 11:50:22 by vdurand           #+#    #+#             */
-/*   Updated: 2025/05/05 15:51:55 by val              ###   ########.fr       */
+/*   Updated: 2025/05/06 04:36:57 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,15 @@ int	key_hook(int keycode, t_vars *vars)
 	if (keycode == XK_space)
 	{
 		printf("ENDIANESS : %d\n", ft_isbigendian());
-		png = png_open("test_files/test4k.png");
+		png = png_open("test_files/baka_test.png");
 		if (png)
 		{
 			printf(" SIZE : %ld\n", png->data.size);
 		}
 		else
 			perror("TEST");
+		t_png_pixel8 pixel = png->pixels_8bit[0];
+		printf("R : %d, G : %d, B : %d, A : %d\n", pixel.r, pixel.g, pixel.b, pixel.a);
 		png_close(png);
 	}
 	if (keycode == XK_Escape)

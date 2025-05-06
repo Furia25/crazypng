@@ -6,7 +6,7 @@
 #    By: val <val@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/13 23:20:17 by val               #+#    #+#              #
-#    Updated: 2025/05/05 17:20:59 by val              ###   ########.fr        #
+#    Updated: 2025/05/06 04:26:16 by val              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -78,9 +78,12 @@ SRC_FILES = \
 	png/png_managing.c \
 	png/png_parsing.c \
 	png/png_chunk_parsing.c \
-	png/png_chunk_utils.c \
+	png/png_utils.c \
 	png/png_chunk_IHDR.c \
-	png/png_postparsing.c \
+	png/png_decompress.c \
+	png/png_unfilter.c \
+	png/png_unfilter_algos.c \
+	png/png_pixel_unpacking.c \
 	deflate/inflate.c \
 	deflate/lz77.c \
 	deflate/inflate_decode.c \

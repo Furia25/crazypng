@@ -6,7 +6,7 @@
 /*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 00:22:01 by val               #+#    #+#             */
-/*   Updated: 2025/05/06 01:29:31 by val              ###   ########.fr       */
+/*   Updated: 2025/05/06 04:25:45 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,6 @@ size_t		cp_fread(void *ptr, size_t size, size_t nmemb, t_cp_file *file);
 uint32_t	swap_endian32(uint32_t value);
 uint16_t	swap_endian16(uint16_t value);
 uint32_t	reverse_32bits(uint32_t code, int len);
-void		swap_ptr(void **ptr1, void **ptr2);
+void		swap_bytes_ptr(uint8_t **ptr1, uint8_t **ptr2);
+
 #endif
