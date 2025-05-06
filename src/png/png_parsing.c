@@ -6,7 +6,7 @@
 /*   By: vdurand <vdurand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 15:15:41 by vdurand           #+#    #+#             */
-/*   Updated: 2025/05/06 16:49:52 by vdurand          ###   ########.fr       */
+/*   Updated: 2025/05/06 18:05:25 by vdurand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ static bool	png_chunk_end(t_png *png, t_png_chunk *chunk, bool idat, int plte)
 	if (!png_unfilter(png))
 		return (false);
 	cp_buffer_reset(&png->compressed_data);
+	cp_buffer_reset(&png->data);
 	return (true);
 }
 
