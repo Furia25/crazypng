@@ -6,7 +6,7 @@
 /*   By: vdurand <vdurand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 04:03:37 by val               #+#    #+#             */
-/*   Updated: 2025/05/06 16:49:46 by vdurand          ###   ########.fr       */
+/*   Updated: 2025/05/06 17:52:19 by vdurand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static void	unpack_pixel(t_png_unfilter_context *context, t_png_pixel8 *out, \
 	size_t		byte;
 	size_t		offset;
 	uint8_t		value;
-	uint8_t 	raw;
+	uint8_t		raw;
 
 	byte = bitpos >> 3;
 	offset = bitpos & 7;
@@ -58,8 +58,8 @@ static void	unpack_pixel(t_png_unfilter_context *context, t_png_pixel8 *out, \
 	raw = value;
 	if (context->bit_depths < 8)
 	{
-		raw = ((value >> (8 - context->bit_depths - offset)) 
-			& context->channel_max);
+		raw = ((value >> (8 - context->bit_depths - offset))
+				& context->channel_max);
 		value = raw * 255 / context->channel_max;
 	}
 	if (context->png->palette_size != 0)

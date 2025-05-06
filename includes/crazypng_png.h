@@ -98,7 +98,7 @@ bool				chunk_precede_plte(t_png_chunk_type type);
 uint8_t				channels_from_color(t_png_color_type type);
 
 bool				chunk_parse_ihdr(t_png *png, t_png_chunk *chunk);
-bool				chunk_parse_plte(t_png *png, t_png_chunk *chunk, 
+bool				chunk_parse_plte(t_png *png, t_png_chunk *chunk,
 						bool idat, int *plte);
 t_png_chunk_type	png_chunk_get_type(t_png_chunk *chunk);
 bool				png_chunk_read(t_png *png, t_png_chunk *chunk);
@@ -108,7 +108,7 @@ bool				png_decompress(t_png *png);
 
 bool				unpack_scanline_to_pixels(t_png_unfilter_context *context,
 						t_png *png);
-bool	png_unfilter(t_png *png);
+bool				png_unfilter(t_png *png);
 /*Filters*/
 void				png_filter_sub(t_png_unfilter_context *context,
 						uint8_t *line);
