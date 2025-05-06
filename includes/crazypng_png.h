@@ -40,14 +40,17 @@
 
 typedef struct s_png_unfilter_context
 {
-	size_t	y;
-	size_t	lines_bytes;
-	size_t	offset;
-	size_t	bpp;
-	size_t	bits_pp;
-	uint8_t	channels_number;
-	uint8_t	*prev_line;
-	uint8_t	*current_line;
+	size_t		y;
+	size_t		lines_bytes;
+	size_t		offset;
+	size_t		bpp;
+	size_t		bits_pp;
+	uint8_t		bit_depths;
+	uint8_t		channels_number;
+	uint32_t	channel_max;
+	uint8_t		*prev_line;
+	uint8_t		*current_line;
+	t_png		*png;
 }	t_png_unfilter_context;
 
 typedef enum e_png_chunk_type
