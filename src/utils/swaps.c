@@ -3,21 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   swaps.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: vdurand <vdurand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 16:18:45 by val               #+#    #+#             */
-/*   Updated: 2025/05/06 04:25:35 by val              ###   ########.fr       */
+/*   Updated: 2025/05/06 17:58:37 by vdurand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "crazypng_utils.h"
 
+/**
+ * @brief Inverse l'ordre des octets d'un 32-bit entier 
+ * (big-endian/little-endian)
+ * 
+ * @param value Valeur à convertir
+ * @return uint32_t Valeur convertie
+ */
 uint32_t	swap_endian32(uint32_t value)
 {
 	return (((value >> 24) & 0xFF) | ((value >> 8) & 0xFF00) | \
 		((value << 8) & 0xFF0000) | ((value << 24) & 0xFF000000));
 }
 
+/**
+ * @brief Inverse l'ordre des octets d'un 16-bit entier 
+ * (big-endian/little-endian)
+ * 
+ * @param value Valeur à convertir
+ * @return uint16_t Valeur convertie
+ */
 uint16_t	swap_endian16(uint16_t value)
 {
 	return ((value >> 8) | (value << 8));

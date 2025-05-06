@@ -3,17 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   bitstream_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: vdurand <vdurand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 15:55:01 by vdurand           #+#    #+#             */
-/*   Updated: 2025/05/03 22:05:41 by val              ###   ########.fr       */
+/*   Updated: 2025/05/06 17:58:25 by vdurand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "crazypng_deflate.h"
 
-/*LSB FIRST bitstream*/
-
+/**
+ * @brief Lit un nombre de bits depuis le flux
+ * 
+ * @param bs Flux binaire
+ * @param count Nombre de bits à lire (1-64)
+ * @return uint64_t Valeur lue
+ * 
+ * @warning Ne vérifie pas les dépassements de buffer
+ */
 uint64_t	bs_read_bits(t_bitstream *bs, int count)
 {
 	uint64_t	result;

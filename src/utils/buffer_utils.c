@@ -3,15 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   buffer_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: vdurand <vdurand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 16:27:15 by vdurand           #+#    #+#             */
-/*   Updated: 2025/05/05 15:46:31 by val              ###   ########.fr       */
+/*   Updated: 2025/05/06 17:57:11 by vdurand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "crazypng_utils.h"
 
+/**
+ * @brief Ajoute des données à un buffer dynamique
+ * 
+ * @param buf Buffer à modifier
+ * @param to_add Données à ajouter
+ * @param len Longueur des données en octets
+ * @return true Succès
+ * @return false Échec d'allocation mémoire
+ */
 bool	cp_buffer_add(t_cp_buffer *buf, void *to_add, size_t len)
 {
 	size_t	new_capacity;
@@ -46,6 +55,11 @@ void	cp_buffer_free(t_cp_buffer *buffer)
 	free(buffer);
 }
 
+/**
+ * @brief Réinitialise un buffer (libère la mémoire et remet à zéro)
+ * 
+ * @param buffer Buffer à réinitialiser
+ */
 void	cp_buffer_reset(t_cp_buffer *buffer)
 {
 	if (buffer->data)

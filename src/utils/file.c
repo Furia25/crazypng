@@ -3,15 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   file.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: vdurand <vdurand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 16:17:30 by val               #+#    #+#             */
-/*   Updated: 2025/05/06 00:44:00 by val              ###   ########.fr       */
+/*   Updated: 2025/05/06 17:56:03 by vdurand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "crazypng_utils.h"
 
+/**
+ * @brief Ouvre un fichier avec gestion de buffer pour lecture séquentielle
+ * 
+ * @param name Nom du fichier
+ * @param flags Flags d'ouverture (voir open())
+ * @return t_cp_file* Structure de fichier ou NULL
+ * 
+ * @note Utilise un buffer interne de CP_BUFFER_SIZE (4096 octets)
+ */
 t_cp_file	*cp_open(char *name, int flags)
 {
 	t_cp_file	*file;

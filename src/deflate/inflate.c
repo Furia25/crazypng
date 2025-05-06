@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   inflate.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: vdurand <vdurand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 16:37:16 by vdurand           #+#    #+#             */
-/*   Updated: 2025/05/05 16:51:16 by val              ###   ########.fr       */
+/*   Updated: 2025/05/06 17:58:12 by vdurand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,17 @@ static bool	is_zlib_stream(t_bitstream *stream);
 static bool	handle_block_decompression(t_inflate_context *context, \
 	uint8_t btype);
 
-/*Deflate decompression algorithm*/
-
+/**
+ * @brief Décompresse des données DEFLATE
+ * 
+ * @param output Buffer de sortie pour les données décompressées
+ * @param input Données compressées
+ * @param input_size Taille des données compressées
+ * @return true Décompression réussie
+ * @return false Erreur pendant la décompression
+ * 
+ * @note Implémentation conforme au RFC 1951
+ */
 bool	cp_inflate(t_cp_buffer *output, uint8_t *input, size_t input_size)
 {
 	t_inflate_context	context;
