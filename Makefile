@@ -6,7 +6,7 @@
 #    By: vdurand <vdurand@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/13 23:20:17 by val               #+#    #+#              #
-#    Updated: 2025/05/06 16:13:53 by vdurand          ###   ########.fr        #
+#    Updated: 2025/05/06 17:23:19 by vdurand          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,7 +44,7 @@ RESET = \033[0m
 
 DEBUG_VALGRIND = valgrind --leak-check=full --show-leak-kinds=all --trace-children=yes --track-fds=all --track-origins=yes -s
 
-NAME = crazypng
+NAME = libcrazypng.a
 
 SRC_DIR = src
 OBJ_DIR = obj
@@ -74,7 +74,6 @@ SRC_FILES = \
 	bitstream/bitstream_utils.c \
 	bitstream/bitstream_reads.c \
 	bitstream/bitstream_misc.c \
-	test_main.c \
 	png/png_managing.c \
 	png/png_parsing.c \
 	png/png_chunk_parsing.c \
@@ -101,21 +100,18 @@ OBJ = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))
 DEP = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.d, $(SRC))
 
 LIBFT_DIR = libft
-MLX_DIR = minilibx
 
-CC = cc -g3 -Ofast
-OPTIFLAGS = 
+CC = cc -g3 
+OPTIFLAGS = -Ofast
 CFLAGS = $(OPTIFLAGS) -Werror -Wextra -Wall
-MLXFLAGS = -L$(MLX_DIR) -lmlx
-FTFLAGS = -L$(LIBFT_DIR) -lft
-LDFLAGS = -lXext -lm -lX11 $(MLXFLAGS) $(FTFLAGS)
-INCLUDES = -I$(MLX_DIR) -I$(INC_DIR) -I$(LIBFT_DIR)
+LDFLAGS = -$(FTFLAGS)
+INCLUDES = -I$(INC_DIR) -I$(LIBFT_DIR)
 
-all: makelibft makeminilibx $(NAME)
+all: makelibft $(NAME)
 
-$(NAME): $(OBJ) $(LIBFT_DIR)/libft.a $(MLX_DIR)/libmlx.a
-	$(SILENT)$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
-	@echo "$(BG_GREEN)>>> Program $(NAME) compiled!$(RESET)"
+$(NAME): $(OBJ) $(LIBFT_DIR)/libft.a
+	$(SILENT) $(AR) rcs $@ $^ $(DUMP_OUT)
+	@echo "$(BG_GREEN)>>> Library $@ built$(RESET)"
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c Makefile $(INC_DIR)/*.h | $(OBJ_DIR)
 	$(SILENT) mkdir -p $(dir $@)
@@ -128,27 +124,22 @@ makelibft:
 	$(SILENT)$(MAKE) bonus -C $(LIBFT_DIR) $(DUMP_OUT)
 	@echo "$(GREEN)>>> Compilation achieved!$(RESET)"
 
-makeminilibx:
-	@echo "$(BLUE)>>> Configuration of MiniLibX...$(RESET)"
-	@cd $(MLX_DIR) && bash configure > /dev/null 2>&1
-	@echo "$(GREEN)>>> Configuration achieved!$(RESET)"
-
 $(OBJ_DIR):
 	@echo "$(YELLOW)>>> Directory '$(OBJ_DIR)' created!$(RESET)"
 	$(SILENT)mkdir -p $(OBJ_DIR)
 
 cleanlibs:
 	@echo "$(YELLOW)>>> Cleaning libs...$(RESET)"
-	@cd $(MLX_DIR)  && bash configure clean > /dev/null 2>&1
 	@$(MAKE) fclean -C $(LIBFT_DIR) > /dev/null 2>&1
 
 clean:
 	@echo "$(YELLOW)>>> Cleaning objects$(RESET)"
-	$(SILENT)rm -rf $(OBJ_DIR) $(DUMP_OUT)
+	rm -rf $(OBJ_DIR)
 
-fclean: clean cleanlibs
-	@echo "$(YELLOW)>>> Cleaning executable...$(RESET)"
-	$(SILENT)rm -f $(NAME) $(DUMP_OUT)
+fclean: clean
+	@echo "$(YELLOW)>>> Cleaning library$(RESET)"
+	rm -f $(NAME)
+	$(MAKE) fclean -C $(LIBFT_DIR)
 
 re: fclean all
 

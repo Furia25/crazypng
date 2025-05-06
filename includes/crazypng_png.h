@@ -18,7 +18,7 @@
 # include <fcntl.h>
 # include <stdlib.h>
 # include <unistd.h>
-# include "crazypng_utils.h"
+# include "crazypng.h"
 
 # define PNG_SIGNATURE	"\211PNG\r\n\032\n"
 
@@ -57,17 +57,6 @@ typedef enum e_png_color_type
 	PNG_COLOR_RGBA				= 6
 }	t_png_color_type;
 
-typedef struct s_png_chunk_data_IHDR
-{
-	uint32_t	width;
-	uint32_t	height;
-	uint8_t		bit_depth;
-	uint8_t		color_type;
-	uint8_t		compression;
-	uint8_t		filter;
-	uint8_t		interlace;
-}	t_png_chunk_data_IHDR;
-
 typedef struct s_png_chunk_header
 {
 	uint32_t				length;
@@ -88,27 +77,6 @@ typedef struct s_png_chunk
 	uint8_t				*data;
 	uint32_t			checksum;
 }	t_png_chunk;
-
-typedef struct s_png_pixel8
-{
-	uint8_t	r;
-	uint8_t	g;
-	uint8_t	b;
-	uint8_t	a;
-}	t_png_pixel8;
-
-typedef struct s_png
-{
-	t_cp_file				*file;
-	t_png_chunk_data_IHDR	header;
-	t_cp_buffer				compressed_data;
-	t_cp_buffer				data;
-	t_png_pixel8			*pixels_8bit;
-	t_png_pixel8			*palette;
-	uint16_t				palette_size;
-	bool					convert_endian;
-	bool					animated;
-}	t_png;
 
 typedef struct s_png_unfilter_context
 {
@@ -135,8 +103,6 @@ bool				chunk_parse_plte(t_png *png, t_png_chunk *chunk,
 t_png_chunk_type	png_chunk_get_type(t_png_chunk *chunk);
 bool				png_chunk_read(t_png *png, t_png_chunk *chunk);
 
-t_png				*png_open(char *file_name);
-void				png_close(t_png *png);
 bool				png_parse(t_png *png);
 bool				png_decompress(t_png *png);
 
