@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   png_parsing_chunk.c                                :+:      :+:    :+:   */
+/*   png_chunk_parsing.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: vdurand <vdurand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 13:22:05 by vdurand           #+#    #+#             */
-/*   Updated: 2025/05/01 02:17:33 by val              ###   ########.fr       */
+/*   Updated: 2025/05/06 15:38:36 by vdurand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,5 @@ static int	chunk_read_header(t_png *png, t_png_chunk *chunk)
 		index++;
 	}
 	chunk->header.type_enum = png_chunk_get_type(chunk);
-	printf("%d", chunk->header.type_enum);
 	return (true);
 }

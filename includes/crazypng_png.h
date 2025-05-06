@@ -105,7 +105,7 @@ typedef struct s_png
 	t_cp_buffer				data;
 	t_png_pixel8			*pixels_8bit;
 	t_png_pixel8			*palette;
-	uint32_t				palette_size;
+	uint8_t					palette_size;
 	bool					convert_endian;
 	bool					animated;
 }	t_png;
@@ -130,7 +130,8 @@ bool				chunk_precede_plte(t_png_chunk_type type);
 uint8_t				channels_from_color(t_png_color_type type);
 
 bool				chunk_parse_ihdr(t_png *png, t_png_chunk *chunk);
-
+bool				chunk_parse_plte(t_png *png, t_png_chunk *chunk, 
+						bool idat, int *plte);
 t_png_chunk_type	png_chunk_get_type(t_png_chunk *chunk);
 bool				png_chunk_read(t_png *png, t_png_chunk *chunk);
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   png_parsing.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: vdurand <vdurand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 15:15:41 by vdurand           #+#    #+#             */
-/*   Updated: 2025/05/06 04:28:36 by val              ###   ########.fr       */
+/*   Updated: 2025/05/06 16:15:45 by vdurand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,24 +20,27 @@ static int	chunk_return(t_png_chunk *chunk, int return_code);
 bool	png_parse(t_png *png)
 {
 	int				plte_number;
-	bool			idat_encountered;
+	bool			idat;
+	bool			result;
 	t_png_chunk		chunk;
 
-	idat_encountered = false;
+	idat = false;
 	plte_number = 0;
+	result = true;
 	if (!png_parse_first(png, &chunk))
 		return (chunk_return(&chunk, false));
 	while (png_chunk_read(png, &chunk))
 	{
-		if (chunk_precede_idat(chunk.header.type_enum) && idat_encountered)
+		if (chunk_precede_idat(chunk.header.type_enum) && idat)
 			return (chunk_return(&chunk, false));
 		if (chunk.header.type_enum == PNG_CHUNK_IEND)
-			return (png_chunk_end(png, &chunk, idat_encountered, plte_number));
-		if (chunk.header.type_enum == PNG_CHUNK_IDAT)
-		{
-			if (!chunk_parse_idat(png, &chunk, &idat_encountered))
-				return (chunk_return(&chunk, false));
-		}
+			return (png_chunk_end(png, &chunk, idat, plte_number));
+		if (chunk.header.type_enum == PNG_CHUNK_PLTE)
+			result = chunk_parse_plte(png, &chunk, idat, &plte_number);
+		else if (chunk.header.type_enum == PNG_CHUNK_IDAT)
+			result = chunk_parse_idat(png, &chunk, &idat);
+		if (!result)
+			return (chunk_return(&chunk, false));
 		free(chunk.data);
 	}
 	return (chunk_return(&chunk, false));

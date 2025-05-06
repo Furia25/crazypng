@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   png_pixel_unpacking.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: vdurand <vdurand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 04:03:37 by val               #+#    #+#             */
-/*   Updated: 2025/05/06 04:35:48 by val              ###   ########.fr       */
+/*   Updated: 2025/05/06 16:12:44 by vdurand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,9 @@ static bool	unpack_clean(t_png_unfilter_context *context, t_png_pixel8 *out)
 		*out = (t_png_pixel8){out->r, out->r, out->r, out->g};
 	else if (type == PNG_COLOR_PALETTE)
 	{
-		//Handle palette
+		if (out->r > png->palette_size)
+			return (false);
+		*out = png->palette[out->r];
 	}
 	else if (type == PNG_COLOR_RGB)
 		out->a = 255;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   png_unfilter.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: vdurand <vdurand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 23:49:35 by val               #+#    #+#             */
-/*   Updated: 2025/05/06 04:26:01 by val              ###   ########.fr       */
+/*   Updated: 2025/05/06 16:09:59 by vdurand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ bool	png_unfilter(t_png *png)
 	context.bit_depths = png->header.bit_depth;
 	context.channels_number = channels_from_color(png->header.color_type);
 	context.bits_pp = context.bit_depths * context.channels_number;
-	context.bpp = (context.bits_pp + 7) / 8;;
+	context.bpp = (context.bits_pp + 7) / 8;
 	context.lines_bytes = ((png->header.width * context.bits_pp) + 7) / 8;
 	context.channel_max = (1 << context.bit_depths) - 1;
 	context.prev_line = ft_calloc(context.lines_bytes, 1);
