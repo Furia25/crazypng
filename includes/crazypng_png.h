@@ -25,6 +25,10 @@
 # define PNG_ERROR_SIGNATURE	"PNG Error: Wrong signature\n"
 # define PNG_ERROR_BITDEPTH		"PNG Error: Invalid bit depth, color pair\n"
 # define PNG_ERROR_IHDR_SIZE	"PNG Error: Invalid IHDR size\n"
+# define PNG_ERROR_FILTERING_BUFFER	"PNG Error : Malformed buffer \
+	during unfiltering\n"
+# define PNG_ERROR_FILTERING_TYPE	"PNG Error : Could not unfilter \
+	PNG decompressed data\n"
 
 # define PNG_CHUNK_SIZE_IHDR	13
 
@@ -38,8 +42,10 @@ typedef struct s_png_unfilter_context
 {
 	size_t	y;
 	size_t	lines_bytes;
+	size_t	offset;
+	size_t	bpp;
+	size_t	bits_pp;
 	uint8_t	channels_number;
-	uint8_t	bits_pp;
 	uint8_t	*prev_line;
 	uint8_t	*current_line;
 }	t_png_unfilter_context;
@@ -129,5 +135,11 @@ t_png				*png_open(char *file_name);
 void				png_close(t_png *png);
 bool				png_parse(t_png *png);
 bool				png_decompress(t_png *png);
+
+/*Filters*/
+void	png_filter_sub(t_png_unfilter_context *context, uint8_t *raw_line);
+void	png_filter_up(t_png_unfilter_context *context, uint8_t *raw_line);
+void	png_filter_average(t_png_unfilter_context *context, uint8_t *line);
+void	png_filter_paeth(t_png_unfilter_context *context, uint8_t *line);
 
 #endif
