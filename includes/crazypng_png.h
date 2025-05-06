@@ -105,7 +105,7 @@ typedef struct s_png
 	t_cp_buffer				data;
 	t_png_pixel8			*pixels_8bit;
 	t_png_pixel8			*palette;
-	uint8_t					palette_size;
+	uint16_t				palette_size;
 	bool					convert_endian;
 	bool					animated;
 }	t_png;

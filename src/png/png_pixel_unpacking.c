@@ -6,7 +6,7 @@
 /*   By: vdurand <vdurand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 04:03:37 by val               #+#    #+#             */
-/*   Updated: 2025/05/06 16:12:44 by vdurand          ###   ########.fr       */
+/*   Updated: 2025/05/06 16:49:46 by vdurand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,20 @@ static void	unpack_pixel(t_png_unfilter_context *context, t_png_pixel8 *out, \
 	size_t		byte;
 	size_t		offset;
 	uint8_t		value;
+	uint8_t 	raw;
 
 	byte = bitpos >> 3;
 	offset = bitpos & 7;
 	value = context->current_line[byte];
+	raw = value;
 	if (context->bit_depths < 8)
-		value = ((value >> (8 - context->bit_depths - \
-			offset)) & context->channel_max) * 255 / context->channel_max;
+	{
+		raw = ((value >> (8 - context->bit_depths - offset)) 
+			& context->channel_max);
+		value = raw * 255 / context->channel_max;
+	}
+	if (context->png->palette_size != 0)
+		value = raw;
 	if (channel_n == 0)
 		out->r = value;
 	else if (channel_n == 1)
@@ -80,7 +87,7 @@ static bool	unpack_clean(t_png_unfilter_context *context, t_png_pixel8 *out)
 		*out = (t_png_pixel8){out->r, out->r, out->r, out->g};
 	else if (type == PNG_COLOR_PALETTE)
 	{
-		if (out->r > png->palette_size)
+		if (out->r >= png->palette_size)
 			return (false);
 		*out = png->palette[out->r];
 	}

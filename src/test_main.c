@@ -6,7 +6,7 @@
 /*   By: vdurand <vdurand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 11:50:22 by vdurand           #+#    #+#             */
-/*   Updated: 2025/05/06 15:42:10 by vdurand          ###   ########.fr       */
+/*   Updated: 2025/05/06 16:57:23 by vdurand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,13 +73,17 @@ int	key_hook(int keycode, t_vars *vars)
 	if (keycode == XK_space)
 	{
 		printf("ENDIANESS : %d\n", ft_isbigendian());
-		png = png_open("test_files/test4k.png");
+		png = png_open("test_files/16bitdepth.png");
 		if (png)
 		{
 			printf(" SIZE : %ld\n", png->data.size);
 		}
 		else
+		{
 			perror("TEST");
+			return 0;
+		}
+			
 		t_img_data	img;
 		img.connection = vars->mlx;
 		img.img = mlx_new_image(vars->mlx, png->header.width, png->header.height);
@@ -110,7 +114,7 @@ int	main(void)
 	vars.mlx = mlx_init();
 	if (!vars.mlx)
 		return (EXIT_FAILURE);
-	vars.win = mlx_new_window(vars.mlx, 4096, 4096, "PNG TEST");
+	vars.win = mlx_new_window(vars.mlx, 1024, 1024, "PNG TEST");
 	mlx_key_hook(vars.win, key_hook, &vars);
 	mlx_loop(vars.mlx);
 	mlx_destroy_window(vars.mlx, vars.win);

@@ -6,7 +6,7 @@
 /*   By: vdurand <vdurand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 15:47:27 by vdurand           #+#    #+#             */
-/*   Updated: 2025/05/06 16:14:04 by vdurand          ###   ########.fr       */
+/*   Updated: 2025/05/06 16:46:07 by vdurand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@ bool	chunk_parse_plte(t_png *png, t_png_chunk *chunk, bool idat, int *plte)
 	entries = chunk->header.length / 3;
 	if (entries > (1 << png->header.bit_depth))
 		return (false);
+	png->palette_size = entries;
 	png->palette = ft_calloc(entries, sizeof(t_png_pixel8));
 	if (!png->palette)
 		return (false);
-	png->palette_size = entries;
 	parse_palette_entries(png, chunk);
 	(*plte)++;
 	return (true);
