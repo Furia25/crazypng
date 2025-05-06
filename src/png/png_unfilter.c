@@ -6,7 +6,7 @@
 /*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 23:49:35 by val               #+#    #+#             */
-/*   Updated: 2025/05/06 03:43:57 by val              ###   ########.fr       */
+/*   Updated: 2025/05/06 03:53:36 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,7 @@
 static bool	scanline_start(t_png_unfilter_context *context);
 static bool	scanline_apply_filters(t_png_unfilter_context *context, \
 	int filter_type);
-static void	unpack_scanline_to_pixels(t_png_unfilter_context *context, \
-	t_png *png);
+static void	unpack_scanline_to_pixels(t_png_unfilter_context *context);
 
 bool	png_unfilter(t_png *png)
 {
@@ -30,6 +29,7 @@ bool	png_unfilter(t_png *png)
 	context.bits_pp = context.bit_depths * context.channels_number;
 	context.bpp = (context.bits_pp + 7) / 8;;
 	context.lines_bytes = ((png->header.width * context.bits_pp) + 7) / 8;
+	context.channel_max = (1 << context.bit_depths) - 1;
 	context.prev_line = ft_calloc(context.lines_bytes, 1);
 	if (!context.prev_line)
 		return (false);
@@ -54,7 +54,7 @@ static bool	scanline_start(t_png_unfilter_context *context)
 	context->offset = 0;
 	while (context->y < png->header.height)
 	{
-		if (context->offset + 1 + context->lines_bytes <= png->data.size)
+		if (context->offset + 1 + context->lines_bytes > png->data.size)
 		{
 			ft_putstr_fd(PNG_ERROR_FILTERING_BUFFER, 2);
 			return (false);
@@ -109,11 +109,10 @@ static void	unpack_scanline_to_pixels(t_png_unfilter_context *context)
 
 	png = context->png;
 	out = png->pixels_8bit + png->header.width * context->y;
-	context->channel_max = 
 	x = 0;
 	while (x < png->header.width)
 	{
-		bit_pos = x * channel * context->bit_depths;
+		bit_pos = x * context->channels_number * context->bit_depths;
 		channel = 0;
 		while (channel < context->channels_number)
 		{
@@ -121,7 +120,8 @@ static void	unpack_scanline_to_pixels(t_png_unfilter_context *context)
 			bit_pos += context->bit_depths;
 			channel++;
 		}
-		if (channel <= 3)
+		if (png->header.color_type != PNG_COLOR_GRAYSCALE_ALPHA
+			&& png->header.color_type != PNG_COLOR_RGBA)
 			out->a = 255;
 		out++;
 		x++;
@@ -133,18 +133,14 @@ static void	unpack_pixel(t_png_unfilter_context *context, t_png_pixel8 *out, \
 {
 	size_t		byte;
 	size_t		offset;
-	uint32_t	max_value;
 	uint8_t		value;
 
 	byte = bitpos >> 3;
 	offset = bitpos & 7;
-	max_value = (1 << context->bit_depths) - 1;
+	value = context->current_line[byte];
 	if (context->bit_depths < 8)
-		value = ((context->current_line[byte] >> \
-			(8 - context->bit_depths - offset)) & max_value) * 255 \
-			/ max_value;
-	else
-		value = context->current_line[byte];
+		value = ((value >> (8 - context->bit_depths - \
+			offset)) & context->channel_max) * 255 / context->channel_max;
 	if (channel_n == 0)
 		out->r = value;
 	else if (channel_n == 1)
