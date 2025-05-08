@@ -1,6 +1,6 @@
 # 🏞️ crazypng
 
-**crazypng** est une bibliothèque C minimaliste pour charger des images PNG et accéder directement aux pixels RGBA 8 bits, sans dépendances externes hormis la libc et **libft**.
+**crazypng** est une bibliothèque C minimaliste pour charger des images PNG et accéder directement aux pixels RGBA 8 bits, sans dépendances externes hormis la libc.
 
 ---
 
