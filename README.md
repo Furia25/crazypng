@@ -27,7 +27,7 @@
 
 ```bash
 # 1. Clone the repository
-$ git clone https://github.com/<user>/crazypng.git
+$ git clone https://github.com/Furia25/crazypng.git
 $ cd crazypng
 
 # 2. Build the library
