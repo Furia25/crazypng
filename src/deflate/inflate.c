@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   inflate.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vdurand <vdurand@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vdurand <vdurand@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 16:37:16 by vdurand           #+#    #+#             */
-/*   Updated: 2025/05/06 17:58:12 by vdurand          ###   ########.fr       */
+/*   Updated: 2025/08/13 19:20:47 by vdurand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "crazypng_deflate.h"
 
-static bool	inflate_init_context(t_inflate_context *context, \
-	t_cp_buffer *output, uint8_t *input, size_t length);
+static bool	inflate_init_context(t_inflate_context *context,
+				t_cp_buffer *output, uint8_t *input, size_t length);
 static bool	inflate_read_blocks(t_inflate_context *context);
 static bool	is_zlib_stream(t_bitstream *stream);
-static bool	handle_block_decompression(t_inflate_context *context, \
-	uint8_t btype);
+static bool	handle_block_decompression(t_inflate_context *context,
+				uint8_t btype);
 
 /**
  * @brief Décompresse des données DEFLATE
@@ -54,8 +54,8 @@ bool	cp_inflate(t_cp_buffer *output, uint8_t *input, size_t input_size)
 	return (true);
 }
 
-static bool	inflate_init_context(t_inflate_context *context, \
-	t_cp_buffer *output, uint8_t *input, size_t length)
+static bool	inflate_init_context(t_inflate_context *context,
+				t_cp_buffer *output, uint8_t *input, size_t length)
 {
 	ft_memset(context, 0, sizeof(t_inflate_context));
 	context->output = output;
@@ -86,13 +86,13 @@ static bool	inflate_read_blocks(t_inflate_context *context)
 			return (false);
 		finished = bfinal;
 		if (!handle_block_decompression(context, btype))
-			return (false);
+			return (false);	
 	}
 	return (true);
 }
 
-static bool	handle_block_decompression(t_inflate_context *context, \
-	uint8_t btype)
+static bool	handle_block_decompression(t_inflate_context *context,
+				uint8_t btype)
 {
 	t_huffman_table	*dynamic_linlen;
 	t_huffman_table	*dynamic_dist;
@@ -104,15 +104,15 @@ static bool	handle_block_decompression(t_inflate_context *context, \
 	}
 	else if (btype == 1)
 	{
-		return (inflate_block_huffman(context, context->huffman_fixed, \
-			context->distance_fixed));
+		return (inflate_block_huffman(context, context->huffman_fixed,
+				context->distance_fixed));
 	}
 	else if (btype == 2)
 	{
 		if (!inflate_get_dynamic(context, &dynamic_linlen, &dynamic_dist))
 			return (false);
-		dynamic_result = inflate_block_huffman(context, dynamic_linlen, \
-			dynamic_dist);
+		dynamic_result = inflate_block_huffman(context,
+				dynamic_linlen, dynamic_dist);
 		huffman_free_table(dynamic_linlen);
 		huffman_free_table(dynamic_dist);
 		return (dynamic_result);

@@ -3,24 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   inflate_read_dynamic.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: vdurand <vdurand@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 14:53:34 by val               #+#    #+#             */
-/*   Updated: 2025/05/05 16:54:30 by val              ###   ########.fr       */
+/*   Updated: 2025/06/23 00:28:20 by vdurand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "crazypng_deflate.h"
 
-static bool	create_dynamic_tables(t_inflate_dynamic_data *data, \
-	t_huffman_table **litlen, \
-	t_huffman_table **dist);
+static bool	create_dynamic_tables(t_inflate_dynamic_data *data,
+				t_huffman_table **litlen,
+				t_huffman_table **dist);
 
 static bool	read_dynamic_hlengths(t_inflate_dynamic_data *data);
 static bool	init_dynamic_clen_tab(t_inflate_dynamic_data *data);
 
 bool	inflate_get_dynamic(t_inflate_context *context,
-	t_huffman_table **litlen, t_huffman_table **dist)
+			t_huffman_table **litlen, t_huffman_table **dist)
 {
 	t_inflate_dynamic_data	data;
 	t_huffman_code			clen_codes[DEFLATE_CLEN_SIZE];
@@ -37,16 +37,16 @@ bool	inflate_get_dynamic(t_inflate_context *context,
 	return (create_dynamic_tables(&data, litlen, dist));
 }
 
-static bool	create_dynamic_tables(t_inflate_dynamic_data *data, \
-	t_huffman_table **litlen,
-	t_huffman_table **dist)
+static bool	create_dynamic_tables(t_inflate_dynamic_data *data,
+				t_huffman_table **litlen,
+				t_huffman_table **dist)
 {
 	int		all_lengths[DEFLATE_LL_TABLE_SIZE + DEFLATE_D_TABLE_SIZE + 1];
 
-	ft_memset(all_lengths, 0, (DEFLATE_LL_TABLE_SIZE + DEFLATE_D_TABLE_SIZE) \
-		* sizeof(int));
-	if (!read_dynamic_code_lengths(data, &data->clen_hufftable, \
-		all_lengths, data->hlit + data->hdist))
+	ft_memset(all_lengths, 0,
+		(DEFLATE_LL_TABLE_SIZE + DEFLATE_D_TABLE_SIZE) * sizeof(int));
+	if (!read_dynamic_code_lengths(data, &data->clen_hufftable,
+			all_lengths, data->hlit + data->hdist))
 		return (false);
 	*litlen = huffman_new_table(data->hlit);
 	if (!*litlen)

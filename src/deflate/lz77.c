@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lz77.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: vdurand <vdurand@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 15:29:56 by val               #+#    #+#             */
-/*   Updated: 2025/05/04 01:26:28 by val              ###   ########.fr       */
+/*   Updated: 2025/06/23 00:28:38 by vdurand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ bool	lz77_window_push(t_lz77_window *win, uint8_t byte)
 	return (true);
 }
 
-bool	lz77_window_push_bytes(t_lz77_window *win, \
-	const uint8_t *src, size_t len)
+bool	lz77_window_push_bytes(t_lz77_window *win,
+			const uint8_t *src, size_t len)
 {
 	size_t	index;
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   png_chunk_parsing.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vdurand <vdurand@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vdurand <vdurand@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 13:22:05 by vdurand           #+#    #+#             */
-/*   Updated: 2025/05/06 15:38:36 by vdurand          ###   ########.fr       */
+/*   Updated: 2025/06/23 00:23:45 by vdurand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ bool	png_chunk_read(t_png *png, t_png_chunk *chunk)
 	chunk->data = ft_calloc(sizeof(uint8_t), chunk->header.length);
 	if (!chunk->data)
 		return (false);
-	if (cp_fread(chunk->data, sizeof(uint8_t), \
-		chunk->header.length, png->file) != chunk->header.length)
+	if (cp_fread(chunk->data, sizeof(uint8_t),
+			chunk->header.length, png->file) != chunk->header.length)
 		return (false);
 	if (cp_fread(&chunk->checksum, sizeof(uint32_t), 1, png->file) != 1)
 		return (false);

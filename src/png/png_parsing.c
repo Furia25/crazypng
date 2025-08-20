@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   png_parsing.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vdurand <vdurand@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vdurand <vdurand@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 15:15:41 by vdurand           #+#    #+#             */
-/*   Updated: 2025/05/06 18:05:25 by vdurand          ###   ########.fr       */
+/*   Updated: 2025/06/23 00:27:14 by vdurand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ bool	png_parse(t_png *png)
 
 static bool	chunk_parse_idat(t_png *png, t_png_chunk *chunk, bool *encountered)
 {
-	if (!cp_buffer_add(&png->compressed_data, chunk->data, \
-		chunk->header.length))
+	if (!cp_buffer_add(&png->compressed_data, chunk->data,
+			chunk->header.length))
 		return (false);
 	*encountered = true;
 	return (true);
@@ -63,9 +63,9 @@ static bool	png_chunk_end(t_png *png, t_png_chunk *chunk, bool idat, int plte)
 		return (false);
 	if (plte == 1)
 	{
-		if (!(png->header.color_type == PNG_COLOR_PALETTE || \
-			png->header.color_type == PNG_COLOR_RGB || \
-			png->header.color_type == PNG_COLOR_RGBA))
+		if (!(png->header.color_type == PNG_COLOR_PALETTE
+				|| png->header.color_type == PNG_COLOR_RGB
+				|| png->header.color_type == PNG_COLOR_RGBA))
 			return (false);
 	}
 	else if (plte == 0 && png->header.color_type == PNG_COLOR_PALETTE)

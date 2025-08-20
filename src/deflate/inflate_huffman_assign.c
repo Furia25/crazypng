@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   inflate_huffman_assign.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: vdurand <vdurand@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 17:46:04 by val               #+#    #+#             */
-/*   Updated: 2025/05/05 16:51:23 by val              ###   ########.fr       */
+/*   Updated: 2025/06/23 00:32:04 by vdurand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "crazypng_deflate.h"
 
-static void	count_code_lengths(const int *code_lengths, \
-	uint16_t *bl_count, size_t count);
+static void	count_code_lengths(const int *code_lengths,
+				uint16_t *bl_count, size_t count);
 static void	compute_first_codes(uint16_t *bl_count, uint16_t *next_code);
 
-void	assign_huffman_codes(t_huffman_code *codes, \
-	const int *code_lengths, size_t count)
+void	assign_huffman_codes(t_huffman_code *codes,
+			const int *code_lengths, size_t count)
 {
 	uint16_t	bl_count[DEFLATE_MAXBITS + 1];
 	uint16_t	next_code[DEFLATE_MAXBITS + 1];
@@ -45,8 +45,8 @@ void	assign_huffman_codes(t_huffman_code *codes, \
 	}
 }
 
-static void	count_code_lengths(const int *code_lengths, \
-	uint16_t *bl_count, size_t count)
+static void	count_code_lengths(const int *code_lengths,
+				uint16_t *bl_count, size_t count)
 {
 	size_t	i;
 

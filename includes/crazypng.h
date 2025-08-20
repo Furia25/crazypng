@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   crazypng.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vdurand <vdurand@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vdurand <vdurand@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 17:03:06 by vdurand           #+#    #+#             */
-/*   Updated: 2025/05/06 17:57:18 by vdurand          ###   ########.fr       */
+/*   Updated: 2025/08/20 15:54:56 by vdurand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 # include <stdint.h>
 # include "crazypng_utils.h"
 
-typedef struct s_png_pixel8
+typedef struct u_png_pixel8
 {
 	uint8_t	r;
 	uint8_t	g;

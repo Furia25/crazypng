@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   png_chunk_PLTE.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vdurand <vdurand@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vdurand <vdurand@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 15:47:27 by vdurand           #+#    #+#             */
-/*   Updated: 2025/05/06 16:46:07 by vdurand          ###   ########.fr       */
+/*   Updated: 2025/06/23 01:13:02 by vdurand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ bool	chunk_parse_plte(t_png *png, t_png_chunk *chunk, bool idat, int *plte)
 	if (chunk->header.length % 3 != 0)
 		return (false);
 	entries = chunk->header.length / 3;
-	if (entries > (1 << png->header.bit_depth))
+	if (entries > (size_t)(1 << png->header.bit_depth))
 		return (false);
 	png->palette_size = entries;
 	png->palette = ft_calloc(entries, sizeof(t_png_pixel8));

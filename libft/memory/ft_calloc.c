@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vdurand <vdurand@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vdurand <vdurand@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 13:09:26 by vdurand           #+#    #+#             */
-/*   Updated: 2024/11/22 15:34:59 by vdurand          ###   ########.fr       */
+/*   Updated: 2025/06/23 00:21:09 by vdurand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	*ft_calloc(size_t el_count, size_t el_size)
 
 	if (el_size == 0 || el_count == 0)
 		return (malloc(0));
-	if (el_count > __SIZE_MAX__ / el_size \
+	if (el_count > __SIZE_MAX__ / el_size
 		|| el_size > __SIZE_MAX__ / el_count)
 		return (NULL);
 	size = el_count * el_size;

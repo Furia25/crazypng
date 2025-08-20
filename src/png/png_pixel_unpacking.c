@@ -3,21 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   png_pixel_unpacking.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vdurand <vdurand@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vdurand <vdurand@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 04:03:37 by val               #+#    #+#             */
-/*   Updated: 2025/05/06 17:52:19 by vdurand          ###   ########.fr       */
+/*   Updated: 2025/08/20 15:56:21 by vdurand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "crazypng_png.h"
 
-static void	unpack_pixel(t_png_unfilter_context *context, t_png_pixel8 *out, \
-	size_t bitpos, size_t channel_n);
-static bool	unpack_clean(t_png_unfilter_context *context, t_png_pixel8 *out);
+static void	unpack_pixel(t_png_unfilter_context *context,
+				t_png_pixel8 *out, size_t bitpos, size_t channel_n);
+static bool	unpack_clean(t_png_unfilter_context *context,
+				t_png_pixel8 *out);
 
-bool	unpack_scanline_to_pixels(t_png_unfilter_context *context, \
-	t_png *png)
+bool	unpack_scanline_to_pixels(t_png_unfilter_context *context,
+			t_png *png)
 {
 	size_t			x;
 	size_t			channel;
@@ -44,8 +45,8 @@ bool	unpack_scanline_to_pixels(t_png_unfilter_context *context, \
 	return (true);
 }
 
-static void	unpack_pixel(t_png_unfilter_context *context, t_png_pixel8 *out, \
-	size_t bitpos, size_t channel_n)
+static void	unpack_pixel(t_png_unfilter_context *context, t_png_pixel8 *out,
+				size_t bitpos, size_t channel_n)
 {
 	size_t		byte;
 	size_t		offset;
@@ -84,7 +85,8 @@ static bool	unpack_clean(t_png_unfilter_context *context, t_png_pixel8 *out)
 	if (type == PNG_COLOR_GRAYSCALE)
 		*out = (t_png_pixel8){out->r, out->r, out->r, 255};
 	else if (type == PNG_COLOR_GRAYSCALE_ALPHA)
-		*out = (t_png_pixel8){out->r, out->r, out->r, out->g};
+		*out = (t_png_pixel8){out->r, out->r,
+			out->r, out->g};
 	else if (type == PNG_COLOR_PALETTE)
 	{
 		if (out->r >= png->palette_size)

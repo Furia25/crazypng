@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   crazypng_deflate.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: vdurand <vdurand@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 14:45:54 by vdurand           #+#    #+#             */
-/*   Updated: 2025/05/06 04:23:07 by val              ###   ########.fr       */
+/*   Updated: 2025/06/23 00:20:19 by vdurand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 # include "crazypng_utils.h"
 # include "crazypng_bitstream.h"
 # include "crazypng_huffman.h"
+# include "libft.h"
 
 # define INFLATE_ERROR_UNSUPPORTED_METHOD	\
 	"Decompression Error : Unsupported compression method\n"
@@ -60,7 +61,7 @@ typedef struct s_inflate_dynamic_data
 	t_huffman_table		clen_hufftable;
 }	t_inflate_dynamic_data;
 
-static const int			g_inflate_hclen_order[DEFLATE_CLEN_SIZE] = {\
+static const int			g_inflate_hclen_order[DEFLATE_CLEN_SIZE] = {
 	16, 17, 18, 0, 8, 7, 9, 6, 10, 5, 11, 4, 12, 3, 13, 2, 14, 1, 15
 };
 
@@ -92,26 +93,26 @@ typedef struct s_code_info
 	uint8_t		extra_bits;
 }	t_code_info;
 
-static const t_code_info	g_deflate_length_table[31] = {\
-	{3, 0}, {4, 0}, {5, 0}, {6, 0}, \
-	{7, 0}, {8, 0}, {9, 0}, {10, 0}, \
-	{11, 1}, {13, 1}, {15, 1}, {17, 1}, \
-	{19, 2}, {23, 2}, {27, 2}, {31, 2}, \
-	{35, 3}, {43, 3}, {51, 3}, {59, 3}, \
-	{67, 4}, {83, 4}, {99, 4}, {115, 4}, \
-	{131, 5}, {163, 5}, {195, 5}, {227, 5}, \
-	{258, 0}, {0, 0}, {0, 0} \
+static const t_code_info	g_deflate_length_table[31] = {
+{3, 0}, {4, 0}, {5, 0}, {6, 0},
+{7, 0}, {8, 0}, {9, 0}, {10, 0},
+{11, 1}, {13, 1}, {15, 1}, {17, 1},
+{19, 2}, {23, 2}, {27, 2}, {31, 2},
+{35, 3}, {43, 3}, {51, 3}, {59, 3},
+{67, 4}, {83, 4}, {99, 4}, {115, 4},
+{131, 5}, {163, 5}, {195, 5}, {227, 5},
+{258, 0}, {0, 0}, {0, 0}
 };
 
-static const t_code_info	g_deflate_distance_table[30] = {\
-	{1, 0}, {2, 0}, {3, 0}, {4, 0}, \
-	{5, 1}, {7, 1}, {9, 2}, {13, 2}, \
-	{17, 3}, {25, 3}, {33, 4}, {49, 4}, \
-	{65, 5}, {97, 5}, {129, 6}, {193, 6}, \
-	{257, 7}, {385, 7}, {513, 8}, {769, 8}, \
-	{1025, 9}, {1537, 9}, {2049, 10}, {3073, 10}, \
-	{4097, 11}, {6145, 11}, {8193, 12}, {12289, 12}, \
-	{16385, 13}, {24577, 13} \
+static const t_code_info	g_deflate_distance_table[30] = {
+{1, 0}, {2, 0}, {3, 0}, {4, 0},
+{5, 1}, {7, 1}, {9, 2}, {13, 2},
+{17, 3}, {25, 3}, {33, 4}, {49, 4},
+{65, 5}, {97, 5}, {129, 6}, {193, 6},
+{257, 7}, {385, 7}, {513, 8}, {769, 8},
+{1025, 9}, {1537, 9}, {2049, 10}, {3073, 10},
+{4097, 11}, {6145, 11}, {8193, 12}, {12289, 12},
+{16385, 13}, {24577, 13}
 };
 
 bool	lz77_window_push(t_lz77_window *win, uint8_t byte);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   inflate_decode.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: vdurand <vdurand@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 15:03:37 by val               #+#    #+#             */
-/*   Updated: 2025/05/05 16:50:02 by val              ###   ########.fr       */
+/*   Updated: 2025/06/23 00:30:46 by vdurand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,20 +32,20 @@ bool	inflate_block_uncompressed(t_inflate_context *context)
 		return (false);
 	if (!bs_read_nbytes(bs, context->output, len))
 		return (false);
-	lz77_window_push_bytes(&context->reference_window, \
+	lz77_window_push_bytes(&context->reference_window,
 		context->output->data + context->output->size - len, len);
 	return (true);
 }
 
-bool	inflate_copy_reference(t_inflate_context *context, \
-	int distance, int length)
+bool	inflate_copy_reference(t_inflate_context *context,
+			int distance, int length)
 {
 	uint8_t	byte;
 	size_t	temp_pos;
 	int		index;
 
-	temp_pos = (context->reference_window.pos - \
-		distance + LZ77_WINDOW_SIZE) % LZ77_WINDOW_SIZE;
+	temp_pos = (context->reference_window.pos
+			- distance + LZ77_WINDOW_SIZE) % LZ77_WINDOW_SIZE;
 	index = 0;
 	while (index < length)
 	{

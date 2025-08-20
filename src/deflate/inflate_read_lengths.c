@@ -3,23 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   inflate_read_lengths.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: vdurand <vdurand@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 19:06:11 by val               #+#    #+#             */
-/*   Updated: 2025/05/05 16:52:35 by val              ###   ########.fr       */
+/*   Updated: 2025/06/23 00:29:42 by vdurand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "crazypng_deflate.h"
 
-static bool	decode_lengths(t_inflate_dynamic_data *data, \
-	t_huffman_table *clen_huff, int *code_lengths);
-static bool	fill_repeat_last(t_inflate_dynamic_data *data, \
-	int *code_lengths, uint8_t extra_bits, uint8_t base);
+static bool	decode_lengths(t_inflate_dynamic_data *data,
+				t_huffman_table *clen_huff, int *code_lengths);
+static bool	fill_repeat_last(t_inflate_dynamic_data *data,
+				int *code_lengths, uint8_t extra_bits, uint8_t base);
 
-bool	read_dynamic_code_lengths(t_inflate_dynamic_data *data, \
-	t_huffman_table *clen_huff, int *code_lengths,
-	uint16_t total_codes)
+bool	read_dynamic_code_lengths(t_inflate_dynamic_data *data,
+			t_huffman_table *clen_huff, int *code_lengths,
+			uint16_t total_codes)
 {
 	data->temp_i = 0;
 	data->temp_size = total_codes;
@@ -32,8 +32,8 @@ bool	read_dynamic_code_lengths(t_inflate_dynamic_data *data, \
 	return (true);
 }
 
-static bool	decode_lengths(t_inflate_dynamic_data *data, \
-	t_huffman_table *clen_huff, int *code_lengths)
+static bool	decode_lengths(t_inflate_dynamic_data *data,
+				t_huffman_table *clen_huff, int *code_lengths)
 {
 	int	symbol;
 
@@ -60,8 +60,8 @@ static bool	decode_lengths(t_inflate_dynamic_data *data, \
 	return (false);
 }
 
-static bool	fill_repeat_last(t_inflate_dynamic_data *data, \
-	int *code_lengths, uint8_t extra_bits, uint8_t base)
+static bool	fill_repeat_last(t_inflate_dynamic_data *data,
+				int *code_lengths, uint8_t extra_bits, uint8_t base)
 {
 	uint16_t	extra;
 

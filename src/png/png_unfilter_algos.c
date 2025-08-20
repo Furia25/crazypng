@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   png_unfilter_algos.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: vdurand <vdurand@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 01:40:50 by val               #+#    #+#             */
-/*   Updated: 2025/05/06 02:31:31 by val              ###   ########.fr       */
+/*   Updated: 2025/06/23 00:21:30 by vdurand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	png_filter_sub(t_png_unfilter_context *context, uint8_t *raw_line)
 	}
 }
 
-void	png_filter_up(t_png_unfilter_context *context, \
+void	png_filter_up(t_png_unfilter_context *context,
 	uint8_t *raw_line)
 {
 	size_t	i;
@@ -106,8 +106,8 @@ void	png_filter_paeth(t_png_unfilter_context *context, uint8_t *raw_line)
 			up_left = context->prev_line[i - context->bpp];
 		}
 		up = context->prev_line[i];
-		context->current_line[i] = raw_line[i] + \
-			paeth_predictor(left, up, up_left);
+		context->current_line[i] = raw_line[i]
+			+ paeth_predictor(left, up, up_left);
 		i++;
 	}
 }

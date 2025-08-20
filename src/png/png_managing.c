@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   png_managing.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vdurand <vdurand@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vdurand <vdurand@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 11:48:38 by vdurand           #+#    #+#             */
-/*   Updated: 2025/05/06 17:56:58 by vdurand          ###   ########.fr       */
+/*   Updated: 2025/08/13 19:18:36 by vdurand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,6 @@
 static bool	verify_png_signature(t_cp_file *file);
 static bool	assign_basics(t_png *png, char *file_name);
 
-/**
- * @brief Ouvre un fichier PNG et prépare les structures de décodage
- * 
- * @param file_name Chemin vers le fichier PNG
- * @return t_png* Structure contenant l'état du décodage, NULL en cas d'erreur
- * 
- * @note Le fichier doit être fermé avec png_close()
- */
 t_png	*png_open(char *file_name)
 {
 	t_png		*png;
@@ -45,11 +37,6 @@ t_png	*png_open(char *file_name)
 	return (png);
 }
 
-/**
- * @brief Ferme un fichier PNG et libère toutes les ressources
- * 
- * @param png Structure de décodage à libérer
- */
 void	png_close(t_png *png)
 {
 	if (!png)

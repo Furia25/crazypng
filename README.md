@@ -1,61 +1,61 @@
-# 🏞️ crazypng
+## 🏞️ crazypng
 
-**crazypng** est une bibliothèque C minimaliste pour charger des images PNG et accéder directement aux pixels RGBA 8 bits, sans dépendances externes hormis la libc et **libft**.
-
----
-
-## ✨ Caractéristiques clés
-
-* ✅ Validation automatique de la signature PNG
-* ✅ Extraction des métadonnées (dimensions, profondeur, type de couleur)
-* ✅ Accès direct à un tableau de pixels RGBA 8 bits
-* ✅ API publique réduite à deux fonctions simples
+**crazypng** is a minimalist C library for loading PNG images and directly accessing 8-bit RGBA pixels, with no external dependencies other than the C standard library.
 
 ---
 
-## 📦 Prérequis
+## ✨ Key Features
 
-| Outil | Version minimale | Commentaire          |
-| ----- | ---------------- | -------------------- |
-| gcc   | 4.8+             | Compatible C99       |
-| make  | —                |                      |
-| libft | —                | Inclus dans le dépôt |
+* ✅ Automatic PNG signature validation
+* ✅ Metadata extraction (dimensions, bit depth, color type)
+* ✅ Direct access to an 8-bit RGBA pixel array
+* ✅ Public API reduced to two simple functions
+
+---
+
+## 📦 Prerequisites
+
+| Tool  | Minimum Version | Notes            |
+| ----- | --------------- | ---------------- |
+| gcc   | 4.8+            | C99-compatible   |
+| make  | —               |                  |
+| libft | —               | Included in repo |
 
 ---
 
 ## 🔧 Installation
 
 ```bash
-# 1. Cloner le dépôt
-git clone https://github.com/<utilisateur>/crazypng.git
-cd crazypng
+# 1. Clone the repository
+$ git clone https://github.com/Furia25/crazypng.git
+$ cd crazypng
 
-# 2. Compiler la bibliothèque
-make
+# 2. Build the library
+$ make
 ```
 
-> Le build génère :
+> The build produces:
 >
-> * **libcrazypng.a** : bibliothèque statique
-> * **libft.a**       : utilitaires
+> * **libcrazypng.a** : static library
+> * **libft.a**       : utility library
 
 ---
 
-## 🛠️ API publique
+## 🛠️ Public API
 
-Définie dans `includes/crazypng.h` :
+Defined in `includes/crazypng.h`:
 
 ```c
 #include "crazypng.h"
 
-// Ouvre un fichier PNG et initialise la structure interne
+// Opens a PNG file and initializes internal structures
 t_png *png_open(const char *file_name);
 
-// Ferme et libère la structure PNG
+// Closes and frees the PNG structure
 void png_close(t_png *png);
 ```
 
-Après `png_open()`, accès à :
+After calling `png_open()`, you can access:
 
 ```c
 // Metadata
@@ -64,36 +64,36 @@ uint32_t height     = img->header.height;
 uint8_t  bit_depth  = img->header.bit_depth;
 uint8_t  color_type = img->header.color_type;
 
-// Pixels RGBA 8 bits (tableau de size width*height)
+// 8-bit RGBA pixels (array of length width*height)
 t_png_pixel8 *pixels = img->pixels_8bit;
 ```
 
 ---
 
-## 🖼️ Exemple simple
+## 🖼️ Simple Example
 
 ```c
 #include "crazypng.h"
 #include <stdio.h>
 
 int main(void) {
-    // Charger l'image
+    // Load the image
     t_png *img = png_open("image.png");
     if (!img) {
-        fprintf(stderr, "⚠️ Échec de l'ouverture du PNG\n");
+        fprintf(stderr, "⚠️ Failed to open PNG\n");
         return 1;
     }
 
-    // Récupérer dimensions
+    // Get dimensions
     uint32_t w = img->header.width;
     uint32_t h = img->header.height;
 
-    // Sauvegarder le flux brut RGBA dans un fichier
+    // Write the raw RGBA stream to a file
     FILE *out = fopen("out.rgba", "wb");
     fwrite(img->pixels_8bit, sizeof(*img->pixels_8bit), w * h, out);
     fclose(out);
 
-    // Libérer
+    // Free resources
     png_close(img);
     return 0;
 }
@@ -101,17 +101,17 @@ int main(void) {
 
 ---
 
-## 🧪 Tests
+## 🧪 Testing
 
-Placez un fichier de test `image.png` puis compilez simplement :
+Place a test file named `image.png` then compile:
 
 ```bash
-gcc test.c -lcrazypng -lft -o test_png
-./test_png
+$ gcc test.c -lcrazypng -lft -o test_png
+$ ./test_png
 ```
 
 ---
 
-## 📜 Licence
+## 📜 License
 
-Ce projet est sous licence **MIT**. Voir [LICENSE](LICENSE) pour plus de détails.
+This project is licensed under the **MIT** License. See [LICENSE](LICENSE) for details.

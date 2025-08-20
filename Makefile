@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vdurand <vdurand@student.42.fr>            +#+  +:+       +#+         #
+#    By: vdurand <vdurand@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/13 23:20:17 by val               #+#    #+#              #
-#    Updated: 2025/05/06 17:23:19 by vdurand          ###   ########.fr        #
+#    Updated: 2025/06/23 15:11:08 by vdurand          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -101,8 +101,8 @@ DEP = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.d, $(SRC))
 
 LIBFT_DIR = libft
 
-CC = cc -g3 
-OPTIFLAGS = -Ofast
+CC = cc
+OPTIFLAGS = -O3
 CFLAGS = $(OPTIFLAGS) -Werror -Wextra -Wall
 LDFLAGS = -$(FTFLAGS)
 INCLUDES = -I$(INC_DIR) -I$(LIBFT_DIR)
@@ -110,7 +110,9 @@ INCLUDES = -I$(INC_DIR) -I$(LIBFT_DIR)
 all: makelibft $(NAME)
 
 $(NAME): $(OBJ) $(LIBFT_DIR)/libft.a
-	$(SILENT) $(AR) rcs $@ $^ $(DUMP_OUT)
+	@cp $(LIBFT_DIR)/libft.a $@
+	$(SILENT) $(AR) rcs $@ $(OBJ) $(DUMP_OUT)
+#	$(SILENT) $(AR) rcs $@ $^ $(DUMP_OUT)
 	@echo "$(BG_GREEN)>>> Library $@ built$(RESET)"
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c Makefile $(INC_DIR)/*.h | $(OBJ_DIR)

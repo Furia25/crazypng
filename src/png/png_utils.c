@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   png_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: vdurand <vdurand@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 15:26:37 by vdurand           #+#    #+#             */
-/*   Updated: 2025/05/06 03:58:53 by val              ###   ########.fr       */
+/*   Updated: 2025/06/23 00:23:27 by vdurand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ bool	chunk_precede_plte(t_png_chunk_type type)
 
 bool	chunk_precede_idat(t_png_chunk_type type)
 {
-	return (type == PNG_CHUNK_IHDR || type == PNG_CHUNK_PLTE || \
-			type == PNG_CHUNK_GAMA);
+	return (type == PNG_CHUNK_IHDR || type == PNG_CHUNK_PLTE
+		|| type == PNG_CHUNK_GAMA);
 }
 
 uint8_t	channels_from_color(t_png_color_type type)

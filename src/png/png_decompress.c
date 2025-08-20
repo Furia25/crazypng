@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   png_postparsing.c                                  :+:      :+:    :+:   */
+/*   png_decompress.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: vdurand <vdurand@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 16:22:45 by vdurand           #+#    #+#             */
-/*   Updated: 2025/05/06 00:49:53 by val              ###   ########.fr       */
+/*   Updated: 2025/06/23 00:24:20 by vdurand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ bool	png_decompress(t_png *png)
 
 static bool	png_inflate(t_png *png)
 {
-	if (!cp_inflate(&png->data, \
-		png->compressed_data.data, png->compressed_data.size))
+	if (!cp_inflate(&png->data,
+			png->compressed_data.data, png->compressed_data.size))
 		return (false);
 	return (true);
 }

@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   png_unfilter.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vdurand <vdurand@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vdurand <vdurand@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 23:49:35 by val               #+#    #+#             */
-/*   Updated: 2025/05/06 16:09:59 by vdurand          ###   ########.fr       */
+/*   Updated: 2025/06/23 00:29:55 by vdurand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "crazypng_png.h"
 
 static bool	scanline_start(t_png_unfilter_context *context);
-static bool	scanline_apply_filters(t_png_unfilter_context *context, \
-	int filter_type);
+static bool	scanline_apply_filters(t_png_unfilter_context *context,
+				int filter_type);
 
 bool	png_unfilter(t_png *png)
 {
@@ -71,8 +71,8 @@ static bool	scanline_start(t_png_unfilter_context *context)
 	return (true);
 }
 
-static bool	scanline_apply_filters(t_png_unfilter_context *context, \
-	int filter_type)
+static bool	scanline_apply_filters(t_png_unfilter_context *context,
+				int filter_type)
 {
 	uint8_t	*raw_line;
 

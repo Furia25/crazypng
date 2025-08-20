@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   swaps.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vdurand <vdurand@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vdurand <vdurand@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 16:18:45 by val               #+#    #+#             */
-/*   Updated: 2025/05/06 17:58:37 by vdurand          ###   ########.fr       */
+/*   Updated: 2025/06/23 00:30:11 by vdurand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
  */
 uint32_t	swap_endian32(uint32_t value)
 {
-	return (((value >> 24) & 0xFF) | ((value >> 8) & 0xFF00) | \
-		((value << 8) & 0xFF0000) | ((value << 24) & 0xFF000000));
+	return (((value >> 24) & 0xFF) | ((value >> 8) & 0xFF00)
+		| ((value << 8) & 0xFF0000) | ((value << 24) & 0xFF000000));
 }
 
 /**

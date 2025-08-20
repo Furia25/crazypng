@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   inflate_decode_huffman.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: vdurand <vdurand@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 01:25:09 by val               #+#    #+#             */
-/*   Updated: 2025/05/06 04:38:16 by val              ###   ########.fr       */
+/*   Updated: 2025/06/23 00:29:00 by vdurand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 static bool	length_from_symbol(int symbol, int *length, t_bitstream *stream);
 static bool	distance_from_symbol(int symbol, int *dist, t_bitstream *stream);
-static bool	handle_symbols(t_inflate_context *context, \
-	t_bitstream *stream, int symbol, t_huffman_table *dist_table);
+static bool	handle_symbols(t_inflate_context *context, t_bitstream *stream,
+				int symbol, t_huffman_table *dist_table);
 
-bool	inflate_block_huffman(t_inflate_context *context, \
-	t_huffman_table *linlen, t_huffman_table *dist_table)
+bool	inflate_block_huffman(t_inflate_context *context,
+			t_huffman_table *linlen, t_huffman_table *dist_table)
 {
 	t_bitstream	*stream;
 	int			symbol;
@@ -38,8 +38,8 @@ bool	inflate_block_huffman(t_inflate_context *context, \
 	return (false);
 }
 
-static bool	handle_symbols(t_inflate_context *context, \
-	t_bitstream *stream, int symbol, t_huffman_table *dist_table)
+static bool	handle_symbols(t_inflate_context *context,
+				t_bitstream *stream, int symbol, t_huffman_table *dist_table)
 {
 	int			distance_symbol;
 	int			length;
